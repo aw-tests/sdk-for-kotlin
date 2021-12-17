@@ -9,7 +9,6 @@ suspend fun main() {
 
     val storage = Storage(client)
     val response = storage.createFile(
-        fileId = "",
         file = File("./path-to-files/image.jpg"),
     )
     val json = response.body?.string()

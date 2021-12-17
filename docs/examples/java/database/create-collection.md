@@ -9,11 +9,10 @@ public void main() {
 
     Database database = new Database(client);
     database.createCollection(
-        collectionId = "",
         name = "[NAME]",
-        permission = "document",
-        read = ["role:all"],
-        write = ["role:all"]
+        read = listOf(),
+        write = listOf(),
+        rules = listOf()
         new Continuation<Response>() {
             @NotNull
             @Override

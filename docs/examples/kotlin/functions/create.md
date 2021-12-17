@@ -9,7 +9,6 @@ suspend fun main() {
 
     val functions = Functions(client)
     val response = functions.create(
-        functionId = "",
         name = "[NAME]",
         execute = listOf(),
         runtime = "dotnet-5.0",

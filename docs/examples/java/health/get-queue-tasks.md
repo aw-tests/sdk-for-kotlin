@@ -1,14 +1,14 @@
 import io.appwrite.Client
-import io.appwrite.services.Account
+import io.appwrite.services.Health
 
 public void main() {
     Client client = Client(context)
         .setEndpoint("https://[HOSTNAME_OR_IP]/v1") // Your API Endpoint
         .setProject("5df5acd0d48c2") // Your project ID
-        .setJWT("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ..."); // Your secret JSON Web Token
+        .setKey("919c2d18fb5d4...a2ae413da83346ad2"); // Your secret API key
 
-    Account account = new Account(client);
-    account.getLogs(new Continuation<Response>() {
+    Health health = new Health(client);
+    health.getQueueTasks(new Continuation<Response>() {
         @NotNull
         @Override
         public CoroutineContext getContext() {

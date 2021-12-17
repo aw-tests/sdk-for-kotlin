@@ -10,7 +10,7 @@ public void main() {
     Users users = new Users(client);
     users.updateStatus(
         userId = "[USER_ID]",
-        status = false
+        status = 1
         new Continuation<Response>() {
             @NotNull
             @Override

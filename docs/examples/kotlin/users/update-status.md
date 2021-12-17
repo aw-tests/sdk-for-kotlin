@@ -10,7 +10,7 @@ suspend fun main() {
     val users = Users(client)
     val response = users.updateStatus(
         userId = "[USER_ID]",
-        status = false
+        status = 1
     )
     val json = response.body?.string()
 }

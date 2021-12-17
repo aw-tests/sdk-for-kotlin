@@ -11,7 +11,6 @@ suspend fun main() {
     val response = database.updateCollection(
         collectionId = "[COLLECTION_ID]",
         name = "[NAME]",
-        permission = "document",
     )
     val json = response.body?.string()
 }

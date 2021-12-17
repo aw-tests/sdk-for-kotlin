@@ -9,7 +9,6 @@ public void main() {
 
     Functions functions = new Functions(client);
     functions.create(
-        functionId = "",
         name = "[NAME]",
         execute = listOf(),
         runtime = "dotnet-5.0",

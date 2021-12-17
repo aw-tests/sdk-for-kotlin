@@ -9,7 +9,6 @@ public void main() {
 
     Teams teams = new Teams(client);
     teams.create(
-        teamId = "",
         name = "[NAME]",
         new Continuation<Response>() {
             @NotNull

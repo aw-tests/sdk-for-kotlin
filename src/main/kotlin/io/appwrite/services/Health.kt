@@ -110,7 +110,7 @@ class Health(client: Client) : Service(client) {
     }
     
     /**
-     * Get Certificates Queue
+     * Get Certificate Queue
      *
      * Get the number of certificates that are waiting to be issued against
      * [Letsencrypt](https://letsencrypt.org/) in the Appwrite internal queue
@@ -171,6 +171,32 @@ class Health(client: Client) : Service(client) {
     @Throws(AppwriteException::class)
     suspend fun getQueueLogs(): Any {
         val path = "/health/queue/logs"
+        val params = mapOf<String, Any?>(
+        )
+        val headers = mapOf(
+            "content-type" to "application/json"
+        )
+        return client.call(
+            "GET",
+            path,
+            headers,
+            params,
+            responseType = Any::class.java,
+        )
+    }
+    
+    /**
+     * Get Tasks Queue
+     *
+     * Get the number of tasks that are waiting to be processed in the Appwrite
+     * internal queue server.
+     *
+     * @return [Any]     
+     */
+    @JvmOverloads
+    @Throws(AppwriteException::class)
+    suspend fun getQueueTasks(): Any {
+        val path = "/health/queue/tasks"
         val params = mapOf<String, Any?>(
         )
         val headers = mapOf(

@@ -9,11 +9,10 @@ suspend fun main() {
 
     val database = Database(client)
     val response = database.createCollection(
-        collectionId = "",
         name = "[NAME]",
-        permission = "document",
-        read = ["role:all"],
-        write = ["role:all"]
+        read = listOf(),
+        write = listOf(),
+        rules = listOf()
     )
     val json = response.body?.string()
 }

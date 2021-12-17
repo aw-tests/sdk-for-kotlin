@@ -10,7 +10,6 @@ public void main() {
     Database database = new Database(client);
     database.createDocument(
         collectionId = "[COLLECTION_ID]",
-        documentId = "",
         data = mapOf( "a" to "b" ),
         new Continuation<Response>() {
             @NotNull
