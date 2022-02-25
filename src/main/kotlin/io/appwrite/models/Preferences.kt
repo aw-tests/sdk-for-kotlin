@@ -1,10 +1,15 @@
 package io.appwrite.models
 
-/// Preferences
+import com.google.gson.annotations.SerializedName
+
+/**
+ * Preferences
+ */
 data class Preferences(
     val data: Map<String, Any>
 ) {
     companion object {
+        @Suppress("UNCHECKED_CAST")
         fun from(map: Map<String, Any>) = Preferences(
             data = map
         )

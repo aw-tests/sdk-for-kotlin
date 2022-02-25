@@ -1,12 +1,34 @@
 package io.appwrite.models
 
-/// Phone
+import com.google.gson.annotations.SerializedName
+
+/**
+ * Phone
+ */
 data class Phone(
+    /**
+     * Phone code.
+     *
+     */
+    @SerializedName("code")
     val code: String,
+
+    /**
+     * Country two-character ISO 3166-1 alpha code.
+     *
+     */
+    @SerializedName("countryCode")
     val countryCode: String,
+
+    /**
+     * Country name.
+     *
+     */
+    @SerializedName("countryName")
     val countryName: String
 ) {
     companion object {
+        @Suppress("UNCHECKED_CAST")
         fun from(map: Map<String, Any>) = Phone(
             code = map["code"] as String,
             countryCode = map["countryCode"] as String,

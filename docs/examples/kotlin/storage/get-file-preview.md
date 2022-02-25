@@ -8,8 +8,9 @@ suspend fun main() {
       .setKey("919c2d18fb5d4...a2ae413da83346ad2") // Your secret API key
 
     val storage = Storage(client)
-    val result = storage.getFilePreview(
+    val response = storage.getFilePreview(
+        bucketId = "[BUCKET_ID]",
         fileId = "[FILE_ID]",
     )
-    println(result); // Resource URL
+    val json = response.body?.string()
 }

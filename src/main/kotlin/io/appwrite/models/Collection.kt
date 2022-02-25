@@ -1,31 +1,89 @@
 package io.appwrite.models
 
-/// Collection
+import com.google.gson.annotations.SerializedName
+
+/**
+ * Collection
+ */
 data class Collection(
+    /**
+     * Collection ID.
+     *
+     */
+    @SerializedName("\$id")
     val id: String,
-    val permissions: Permissions,
+
+    /**
+     * Collection read permissions.
+     *
+     */
+    @SerializedName("\$read")
+    val read: List<Any>,
+
+    /**
+     * Collection write permissions.
+     *
+     */
+    @SerializedName("\$write")
+    val write: List<Any>,
+
+    /**
+     * Collection name.
+     *
+     */
+    @SerializedName("name")
     val name: String,
-    val dateCreated: Long,
-    val dateUpdated: Long,
-    val rules: List<Rule>
+
+    /**
+     * Collection enabled.
+     *
+     */
+    @SerializedName("enabled")
+    val enabled: Boolean,
+
+    /**
+     * Collection permission model. Possible values: `document` or `collection`
+     *
+     */
+    @SerializedName("permission")
+    val permission: String,
+
+    /**
+     * Collection attributes.
+     *
+     */
+    @SerializedName("attributes")
+    val attributes: List<Any>,
+
+    /**
+     * Collection indexes.
+     *
+     */
+    @SerializedName("indexes")
+    val indexes: List<Index>
 ) {
     companion object {
+        @Suppress("UNCHECKED_CAST")
         fun from(map: Map<String, Any>) = Collection(
             id = map["\$id"] as String,
-            permissions = Permissions.from(map = map["\$permissions"] as Map<String, Any>),
+            read = map["\$read"] as List<Any>,
+            write = map["\$write"] as List<Any>,
             name = map["name"] as String,
-            dateCreated = map["dateCreated"] as Long,
-            dateUpdated = map["dateUpdated"] as Long,
-            rules = (map["rules"] as List<Map<String, Any>>).map { Rule.from(map = it) }
+            enabled = map["enabled"] as Boolean,
+            permission = map["permission"] as String,
+            attributes = map["attributes"] as List<Any>,
+            indexes = (map["indexes"] as List<Map<String, Any>>).map { Index.from(map = it) }
         )
     }
 
     fun toMap(): Map<String, Any> = mapOf(
         "\$id" to id as Any,
-        "\$permissions" to permissions.toMap() as Any,
+        "\$read" to read as Any,
+        "\$write" to write as Any,
         "name" to name as Any,
-        "dateCreated" to dateCreated as Any,
-        "dateUpdated" to dateUpdated as Any,
-        "rules" to rules.map { it.toMap() } as Any
+        "enabled" to enabled as Any,
+        "permission" to permission as Any,
+        "attributes" to attributes as Any,
+        "indexes" to indexes.map { it.toMap() } as Any
     )
 }

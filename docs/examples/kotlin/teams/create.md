@@ -9,6 +9,7 @@ suspend fun main() {
 
     val teams = Teams(client)
     val response = teams.create(
+        teamId = "[TEAM_ID]",
         name = "[NAME]",
     )
     val json = response.body?.string()
