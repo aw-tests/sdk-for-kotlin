@@ -46,7 +46,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.CollectionList = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.CollectionList = {
             io.appwrite.models.CollectionList.from(map = it)
         }
         return client.call(
@@ -55,7 +55,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.CollectionList::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -66,7 +66,7 @@ class Database(client: Client) : Service(client) {
      *
      * @param collectionId Unique Id. Choose your own unique ID or pass the string &quot;unique()&quot; to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can&#039;t start with a special char. Max length is 36 chars.
      * @param name Collection name. Max length: 128 chars.
-     * @param permission Permissions type model to use for reading documents in this collection. You can use collection-level permission set once on the collection using the `read` and `write` params, or you can set document-level permission where each document read and write params will decide who has access to read and write to each document individually. [learn more about permissions](https://appwrite.io/docs/permissions) and get a full list of available permissions.
+     * @param permission Specifies the permissions model used in this collection, which accepts either &#039;collection&#039; or &#039;document&#039;. For &#039;collection&#039; level permission, the permissions specified in read and write params are applied to all documents in the collection. For &#039;document&#039; level permissions, read and write permissions are specified in each document. [learn more about permissions](https://appwrite.io/docs/permissions) and get a full list of available permissions.
      * @param read An array of strings with read permissions. By default no user is granted with any read permissions. [learn more about permissions](https://appwrite.io/docs/permissions) and get a full list of available permissions.
      * @param write An array of strings with write permissions. By default no user is granted with any write permissions. [learn more about permissions](https://appwrite.io/docs/permissions) and get a full list of available permissions.
      * @return [io.appwrite.models.Collection]     
@@ -91,7 +91,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Collection = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Collection = {
             io.appwrite.models.Collection.from(map = it)
         }
         return client.call(
@@ -100,7 +100,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Collection::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -124,7 +124,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Collection = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Collection = {
             io.appwrite.models.Collection.from(map = it)
         }
         return client.call(
@@ -133,7 +133,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Collection::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -171,7 +171,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Collection = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Collection = {
             io.appwrite.models.Collection.from(map = it)
         }
         return client.call(
@@ -180,7 +180,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Collection::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -230,7 +230,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.AttributeList = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeList = {
             io.appwrite.models.AttributeList.from(map = it)
         }
         return client.call(
@@ -239,7 +239,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.AttributeList::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -275,7 +275,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.AttributeBoolean = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeBoolean = {
             io.appwrite.models.AttributeBoolean.from(map = it)
         }
         return client.call(
@@ -284,7 +284,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.AttributeBoolean::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -320,7 +320,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.AttributeEmail = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeEmail = {
             io.appwrite.models.AttributeEmail.from(map = it)
         }
         return client.call(
@@ -329,7 +329,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.AttributeEmail::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -338,7 +338,7 @@ class Database(client: Client) : Service(client) {
      *
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
-     * @param elements Array of elements in enumerated type. Uses length of longest element to determine size.
+     * @param elements Array of elements in enumerated type. Uses length of longest element to determine size. Maximum of 100 elements are allowed, each 1024 characters long.
      * @param required Is attribute required?
      * @param default Default value for attribute when not provided. Cannot be set when attribute is required.
      * @param array Is attribute an array?
@@ -365,7 +365,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.AttributeEnum = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeEnum = {
             io.appwrite.models.AttributeEnum.from(map = it)
         }
         return client.call(
@@ -374,7 +374,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.AttributeEnum::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -417,7 +417,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.AttributeFloat = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeFloat = {
             io.appwrite.models.AttributeFloat.from(map = it)
         }
         return client.call(
@@ -426,7 +426,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.AttributeFloat::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -469,7 +469,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.AttributeInteger = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeInteger = {
             io.appwrite.models.AttributeInteger.from(map = it)
         }
         return client.call(
@@ -478,7 +478,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.AttributeInteger::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -514,7 +514,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.AttributeIp = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeIp = {
             io.appwrite.models.AttributeIp.from(map = it)
         }
         return client.call(
@@ -523,7 +523,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.AttributeIp::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -562,7 +562,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.AttributeString = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeString = {
             io.appwrite.models.AttributeString.from(map = it)
         }
         return client.call(
@@ -571,7 +571,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.AttributeString::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -607,7 +607,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.AttributeUrl = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeUrl = {
             io.appwrite.models.AttributeUrl.from(map = it)
         }
         return client.call(
@@ -616,7 +616,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.AttributeUrl::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -685,13 +685,13 @@ class Database(client: Client) : Service(client) {
      * modes](/docs/admin).
      *
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
-     * @param queries Array of query strings.
+     * @param queries Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/database#querying-documents). Maximum of 100 queries are allowed, each 128 characters long.
      * @param limit Maximum number of documents to return in response. By default will return maximum 25 results. Maximum of 100 results allowed per request.
      * @param offset Offset value. The default value is 0. Use this value to manage pagination. [learn more about pagination](https://appwrite.io/docs/pagination)
      * @param cursor ID of the document used as the starting point for the query, excluding the document itself. Should be used for efficient pagination when working with large sets of data. [learn more about pagination](https://appwrite.io/docs/pagination)
      * @param cursorDirection Direction of the cursor.
-     * @param orderAttributes Array of attributes used to sort results.
-     * @param orderTypes Array of order directions for sorting attribtues. Possible values are DESC for descending order, or ASC for ascending order.
+     * @param orderAttributes Array of attributes used to sort results. Maximum of 100 order attributes are allowed, each 128 characters long.
+     * @param orderTypes Array of order directions for sorting attribtues. Possible values are DESC for descending order, or ASC for ascending order. Maximum of 100 order types are allowed.
      * @return [io.appwrite.models.DocumentList]     
      */
     @JvmOverloads
@@ -719,7 +719,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.DocumentList = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.DocumentList = {
             io.appwrite.models.DocumentList.from(map = it)
         }
         return client.call(
@@ -728,7 +728,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.DocumentList::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -766,7 +766,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Document = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Document = {
             io.appwrite.models.Document.from(map = it)
         }
         return client.call(
@@ -775,7 +775,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Document::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -801,7 +801,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Document = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Document = {
             io.appwrite.models.Document.from(map = it)
         }
         return client.call(
@@ -810,7 +810,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Document::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -822,7 +822,7 @@ class Database(client: Client) : Service(client) {
      *
      * @param collectionId Collection ID.
      * @param documentId Document ID.
-     * @param data Document data as JSON object.
+     * @param data Document data as JSON object. Include only attribute and value pairs to be updated.
      * @param read An array of strings with read permissions. By default inherits the existing read permissions. [learn more about permissions](https://appwrite.io/docs/permissions) and get a full list of available permissions.
      * @param write An array of strings with write permissions. By default inherits the existing write permissions. [learn more about permissions](https://appwrite.io/docs/permissions) and get a full list of available permissions.
      * @return [io.appwrite.models.Document]     
@@ -845,7 +845,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Document = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Document = {
             io.appwrite.models.Document.from(map = it)
         }
         return client.call(
@@ -854,16 +854,14 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Document::class.java,
-            convert = convert,
+            converter,
         )
     }
     
     /**
      * Delete Document
      *
-     * Delete a document by its unique ID. This endpoint deletes only the parent
-     * documents, its attributes and relations to other documents. Child documents
-     * **will not** be deleted.
+     * Delete a document by its unique ID.
      *
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param documentId Document ID.
@@ -907,7 +905,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.IndexList = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.IndexList = {
             io.appwrite.models.IndexList.from(map = it)
         }
         return client.call(
@@ -916,7 +914,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.IndexList::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -926,8 +924,8 @@ class Database(client: Client) : Service(client) {
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Index Key.
      * @param type Index type.
-     * @param attributes Array of attributes to index.
-     * @param orders Array of index orders.
+     * @param attributes Array of attributes to index. Maximum of 100 attributes are allowed, each 32 characters long.
+     * @param orders Array of index orders. Maximum of 100 orders are allowed.
      * @return [io.appwrite.models.Index]     
      */
     @JvmOverloads
@@ -949,7 +947,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Index = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Index = {
             io.appwrite.models.Index.from(map = it)
         }
         return client.call(
@@ -958,7 +956,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Index::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -981,7 +979,7 @@ class Database(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Index = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Index = {
             io.appwrite.models.Index.from(map = it)
         }
         return client.call(
@@ -990,7 +988,7 @@ class Database(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Index::class.java,
-            convert = convert,
+            converter,
         )
     }
     

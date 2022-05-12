@@ -46,7 +46,7 @@ class Storage(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.BucketList = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.BucketList = {
             io.appwrite.models.BucketList.from(map = it)
         }
         return client.call(
@@ -55,7 +55,7 @@ class Storage(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.BucketList::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -71,7 +71,7 @@ class Storage(client: Client) : Service(client) {
      * @param write An array of strings with write permissions. By default no user is granted with any write permissions. [learn more about permissions](/docs/permissions) and get a full list of available permissions.
      * @param enabled Is bucket enabled?
      * @param maximumFileSize Maximum file size allowed in bytes. Maximum allowed value is 30MB. For self-hosted setups you can change the max limit by changing the `_APP_STORAGE_LIMIT` environment variable. [Learn more about storage environment variables](docs/environment-variables#storage)
-     * @param allowedFileExtensions Allowed file extensions
+     * @param allowedFileExtensions Allowed file extensions. Maximum of 100 extensions are allowed, each 64 characters long.
      * @param encryption Is encryption enabled? For file size above 20MB encryption is skipped even if it&#039;s enabled
      * @param antivirus Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it&#039;s enabled
      * @return [io.appwrite.models.Bucket]     
@@ -106,7 +106,7 @@ class Storage(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Bucket = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Bucket = {
             io.appwrite.models.Bucket.from(map = it)
         }
         return client.call(
@@ -115,7 +115,7 @@ class Storage(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Bucket::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -139,7 +139,7 @@ class Storage(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Bucket = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Bucket = {
             io.appwrite.models.Bucket.from(map = it)
         }
         return client.call(
@@ -148,7 +148,7 @@ class Storage(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Bucket::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -164,7 +164,7 @@ class Storage(client: Client) : Service(client) {
      * @param write An array of strings with write permissions. By default inherits the existing write permissions. [learn more about permissions](/docs/permissions) and get a full list of available permissions.
      * @param enabled Is bucket enabled?
      * @param maximumFileSize Maximum file size allowed in bytes. Maximum allowed value is 30MB. For self hosted version you can change the limit by changing _APP_STORAGE_LIMIT environment variable. [Learn more about storage environment variables](docs/environment-variables#storage)
-     * @param allowedFileExtensions Allowed file extensions
+     * @param allowedFileExtensions Allowed file extensions. Maximum of 100 extensions are allowed, each 64 characters long.
      * @param encryption Is encryption enabled? For file size above 20MB encryption is skipped even if it&#039;s enabled
      * @param antivirus Is virus scanning enabled? For file size above 20MB AntiVirus scanning is skipped even if it&#039;s enabled
      * @return [io.appwrite.models.Bucket]     
@@ -198,7 +198,7 @@ class Storage(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.Bucket = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.Bucket = {
             io.appwrite.models.Bucket.from(map = it)
         }
         return client.call(
@@ -207,7 +207,7 @@ class Storage(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.Bucket::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -278,7 +278,7 @@ class Storage(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.FileList = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.FileList = {
             io.appwrite.models.FileList.from(map = it)
         }
         return client.call(
@@ -287,7 +287,7 @@ class Storage(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.FileList::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -339,17 +339,19 @@ class Storage(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "multipart/form-data"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.File = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.File = {
             io.appwrite.models.File.from(map = it)
         }
+        val idParamName: String? = "fileId"
         val paramName = "file"
         return client.chunkedUpload(
             path,
             headers,
             params,
             responseType = io.appwrite.models.File::class.java,
-            convert = convert,
+            converter,
             paramName,
+            idParamName,
             onProgress,
         )
     }
@@ -376,7 +378,7 @@ class Storage(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.File = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.File = {
             io.appwrite.models.File.from(map = it)
         }
         return client.call(
@@ -385,7 +387,7 @@ class Storage(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.File::class.java,
-            convert = convert,
+            converter,
         )
     }
     
@@ -417,7 +419,7 @@ class Storage(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val convert: (Map<String, Any>) -> io.appwrite.models.File = {
+        val converter: (Map<String, Any>) -> io.appwrite.models.File = {
             io.appwrite.models.File.from(map = it)
         }
         return client.call(
@@ -426,7 +428,7 @@ class Storage(client: Client) : Service(client) {
             headers,
             params,
             responseType = io.appwrite.models.File::class.java,
-            convert = convert,
+            converter,
         )
     }
     
