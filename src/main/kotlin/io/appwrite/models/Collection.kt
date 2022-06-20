@@ -14,6 +14,20 @@ data class Collection(
     val id: String,
 
     /**
+     * Collection creation date in Unix timestamp.
+     *
+     */
+    @SerializedName("\$createdAt")
+    val createdAt: Long,
+
+    /**
+     * Collection update date in Unix timestamp.
+     *
+     */
+    @SerializedName("\$updatedAt")
+    val updatedAt: Long,
+
+    /**
      * Collection read permissions.
      *
      */
@@ -66,6 +80,8 @@ data class Collection(
         @Suppress("UNCHECKED_CAST")
         fun from(map: Map<String, Any>) = Collection(
             id = map["\$id"] as String,
+            createdAt = (map["\$createdAt"] as Number).toLong(),
+            updatedAt = (map["\$updatedAt"] as Number).toLong(),
             read = map["\$read"] as List<Any>,
             write = map["\$write"] as List<Any>,
             name = map["name"] as String,
@@ -78,6 +94,8 @@ data class Collection(
 
     fun toMap(): Map<String, Any> = mapOf(
         "\$id" to id as Any,
+        "\$createdAt" to createdAt as Any,
+        "\$updatedAt" to updatedAt as Any,
         "\$read" to read as Any,
         "\$write" to write as Any,
         "name" to name as Any,

@@ -1,5 +1,5 @@
 import io.appwrite.Client
-import io.appwrite.services.Storage
+import io.appwrite.services.Users
 
 public void main() {
     Client client = Client(context)
@@ -7,11 +7,10 @@ public void main() {
         .setProject("5df5acd0d48c2") // Your project ID
         .setKey("919c2d18fb5d4...a2ae413da83346ad2"); // Your secret API key
 
-    Storage storage = new Storage(client);
-    storage.createFile(
-        bucketId = "[BUCKET_ID]",
-        fileId = "[FILE_ID]",
-        file = File("file.png"),
+    Users users = new Users(client);
+    users.updatePhoneVerification(
+        userId = "[USER_ID]",
+        phoneVerification = false
         new Continuation<Response>() {
             @NotNull
             @Override

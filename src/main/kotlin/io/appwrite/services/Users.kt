@@ -339,6 +339,41 @@ class Users(client: Client) : Service(client) {
     }
     
     /**
+     * Update Phone
+     *
+     * Update the user phone by its unique ID.
+     *
+     * @param userId User ID.
+     * @param number User phone number.
+     * @return [io.appwrite.models.User]     
+     */
+    @JvmOverloads
+    @Throws(AppwriteException::class)
+    suspend fun updatePhone(
+		userId: String,
+		number: String
+	): io.appwrite.models.User {
+        val path = "/users/{userId}/phone".replace("{userId}", userId)
+        val params = mutableMapOf<String, Any?>(
+            "number" to number
+        )
+        val headers = mutableMapOf(
+            "content-type" to "application/json"
+        )
+        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it)
+        }
+        return client.call(
+            "PATCH",
+            path,
+            headers,
+            params,
+            responseType = io.appwrite.models.User::class.java,
+            converter,
+        )
+    }
+    
+    /**
      * Get User Preferences
      *
      * Get the user preferences by its unique ID.
@@ -544,13 +579,48 @@ class Users(client: Client) : Service(client) {
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
-    suspend fun updateVerification(
+    suspend fun updateEmailVerification(
 		userId: String,
 		emailVerification: Boolean
 	): io.appwrite.models.User {
         val path = "/users/{userId}/verification".replace("{userId}", userId)
         val params = mutableMapOf<String, Any?>(
             "emailVerification" to emailVerification
+        )
+        val headers = mutableMapOf(
+            "content-type" to "application/json"
+        )
+        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it)
+        }
+        return client.call(
+            "PATCH",
+            path,
+            headers,
+            params,
+            responseType = io.appwrite.models.User::class.java,
+            converter,
+        )
+    }
+    
+    /**
+     * Update Phone Verification
+     *
+     * Update the user phone verification status by its unique ID.
+     *
+     * @param userId User ID.
+     * @param phoneVerification User phone verification status.
+     * @return [io.appwrite.models.User]     
+     */
+    @JvmOverloads
+    @Throws(AppwriteException::class)
+    suspend fun updatePhoneVerification(
+		userId: String,
+		phoneVerification: Boolean
+	): io.appwrite.models.User {
+        val path = "/users/{userId}/verification/phone".replace("{userId}", userId)
+        val params = mutableMapOf<String, Any?>(
+            "phoneVerification" to phoneVerification
         )
         val headers = mutableMapOf(
             "content-type" to "application/json"
