@@ -42,6 +42,13 @@ data class Collection(
     val write: List<Any>,
 
     /**
+     * Database ID.
+     *
+     */
+    @SerializedName("databaseId")
+    val databaseId: String,
+
+    /**
      * Collection name.
      *
      */
@@ -84,6 +91,7 @@ data class Collection(
             updatedAt = (map["\$updatedAt"] as Number).toLong(),
             read = map["\$read"] as List<Any>,
             write = map["\$write"] as List<Any>,
+            databaseId = map["databaseId"] as String,
             name = map["name"] as String,
             enabled = map["enabled"] as Boolean,
             permission = map["permission"] as String,
@@ -98,6 +106,7 @@ data class Collection(
         "\$updatedAt" to updatedAt as Any,
         "\$read" to read as Any,
         "\$write" to write as Any,
+        "databaseId" to databaseId as Any,
         "name" to name as Any,
         "enabled" to enabled as Any,
         "permission" to permission as Any,
