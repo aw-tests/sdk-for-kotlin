@@ -17,7 +17,7 @@ class Databases(client: Client) : Service(client) {
      * @param cursor ID of the collection used as the starting point for the query, excluding the collection itself. Should be used for efficient pagination when working with large sets of data.
      * @param cursorDirection Direction of the cursor.
      * @param orderType Order result by ASC or DESC order.
-     * @return [io.appwrite.models.CollectionList]     
+     * @return [io.appwrite.models.DatabaseList]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
@@ -28,7 +28,7 @@ class Databases(client: Client) : Service(client) {
 		cursor: String? = null,
 		cursorDirection: String? = null,
 		orderType: String? = null
-	): io.appwrite.models.CollectionList {
+	): io.appwrite.models.DatabaseList {
         val path = "/databases"
         val params = mutableMapOf<String, Any?>(
             "search" to search,
@@ -41,15 +41,15 @@ class Databases(client: Client) : Service(client) {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.CollectionList = {
-            io.appwrite.models.CollectionList.from(map = it)
+        val converter: (Map<String, Any>) -> io.appwrite.models.DatabaseList = {
+            io.appwrite.models.DatabaseList.from(map = it)
         }
         return client.call(
             "GET",
             path,
             headers,
             params,
-            responseType = io.appwrite.models.CollectionList::class.java,
+            responseType = io.appwrite.models.DatabaseList::class.java,
             converter,
         )
     }
@@ -987,7 +987,7 @@ class Databases(client: Client) : Service(client) {
 		databaseId: String,
 		collectionId: String,
 		documentId: String,
-		data: Any,
+		data: Any? = null,
 		read: List<Any>? = null,
 		write: List<Any>? = null
 	): io.appwrite.models.Document {
