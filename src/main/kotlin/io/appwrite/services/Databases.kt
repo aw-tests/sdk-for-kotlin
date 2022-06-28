@@ -6,7 +6,13 @@ import okhttp3.Cookie
 import okhttp3.Response
 import java.io.File
 
-class Databases(client: Client) : Service(client) {
+class Databases : Service {
+
+    val databaseId: String
+
+    public constructor(client: Client, databaseId: String) : super(client) {
+        this.databaseId = databaseId
+    }
 
     /**
      * List Databases
@@ -15,7 +21,7 @@ class Databases(client: Client) : Service(client) {
      * @param limit Maximum number of collection to return in response. By default will return maximum 25 results. Maximum of 100 results allowed per request.
      * @param offset Offset value. The default value is 0. Use this param to manage pagination. [learn more about pagination](https://appwrite.io/docs/pagination)
      * @param cursor ID of the collection used as the starting point for the query, excluding the collection itself. Should be used for efficient pagination when working with large sets of data.
-     * @param cursorDirection Direction of the cursor.
+     * @param cursorDirection Direction of the cursor, can be either &#039;before&#039; or &#039;after&#039;.
      * @param orderType Order result by ASC or DESC order.
      * @return [io.appwrite.models.DatabaseList]     
      */
@@ -57,14 +63,12 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create Database
      *
-     * @param databaseId Unique Id. Choose your own unique ID or pass the string &quot;unique()&quot; to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can&#039;t start with a special char. Max length is 36 chars.
      * @param name Collection name. Max length: 128 chars.
      * @return [io.appwrite.models.Database]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun create(
-		databaseId: String,
 		name: String
 	): io.appwrite.models.Database {
         val path = "/databases"
@@ -91,13 +95,11 @@ class Databases(client: Client) : Service(client) {
     /**
      * Get Database
      *
-     * @param databaseId Database ID.
      * @return [io.appwrite.models.Collection]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun get(
-		databaseId: String
 	): io.appwrite.models.Collection {
         val path = "/databases/{databaseId}".replace("{databaseId}", databaseId)
         val params = mutableMapOf<String, Any?>(
@@ -121,14 +123,12 @@ class Databases(client: Client) : Service(client) {
     /**
      * Update Database
      *
-     * @param databaseId Database ID.
      * @param name Collection name. Max length: 128 chars.
      * @return [io.appwrite.models.Collection]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun update(
-		databaseId: String,
 		name: String
 	): io.appwrite.models.Collection {
         val path = "/databases/{databaseId}".replace("{databaseId}", databaseId)
@@ -154,13 +154,11 @@ class Databases(client: Client) : Service(client) {
     /**
      * Delete Database
      *
-     * @param databaseId Database ID.
      * @return [Any]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun delete(
-		databaseId: String
 	): Any {
         val path = "/databases/{databaseId}".replace("{databaseId}", databaseId)
         val params = mutableMapOf<String, Any?>(
@@ -180,19 +178,17 @@ class Databases(client: Client) : Service(client) {
     /**
      * List Collections
      *
-     * @param databaseId Database ID.
      * @param search Search term to filter your list results. Max length: 256 chars.
      * @param limit Maximum number of collection to return in response. By default will return maximum 25 results. Maximum of 100 results allowed per request.
      * @param offset Offset value. The default value is 0. Use this param to manage pagination. [learn more about pagination](https://appwrite.io/docs/pagination)
      * @param cursor ID of the collection used as the starting point for the query, excluding the collection itself. Should be used for efficient pagination when working with large sets of data.
-     * @param cursorDirection Direction of the cursor.
+     * @param cursorDirection Direction of the cursor, can be either &#039;before&#039; or &#039;after&#039;.
      * @param orderType Order result by ASC or DESC order.
      * @return [io.appwrite.models.CollectionList]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun listCollections(
-		databaseId: String,
 		search: String? = null,
 		limit: Long? = null,
 		offset: Long? = null,
@@ -228,7 +224,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create Collection
      *
-     * @param databaseId Database ID.
      * @param collectionId Unique Id. Choose your own unique ID or pass the string &quot;unique()&quot; to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can&#039;t start with a special char. Max length is 36 chars.
      * @param name Collection name. Max length: 128 chars.
      * @param permission Specifies the permissions model used in this collection, which accepts either &#039;collection&#039; or &#039;document&#039;. For &#039;collection&#039; level permission, the permissions specified in read and write params are applied to all documents in the collection. For &#039;document&#039; level permissions, read and write permissions are specified in each document. [learn more about permissions](https://appwrite.io/docs/permissions) and get a full list of available permissions.
@@ -239,7 +234,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createCollection(
-		databaseId: String,
 		collectionId: String,
 		name: String,
 		permission: String,
@@ -273,14 +267,12 @@ class Databases(client: Client) : Service(client) {
     /**
      * Get Collection
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID.
      * @return [io.appwrite.models.Collection]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun getCollection(
-		databaseId: String,
 		collectionId: String
 	): io.appwrite.models.Collection {
         val path = "/databases/{databaseId}/collections/{collectionId}".replace("{databaseId}", databaseId).replace("{collectionId}", collectionId)
@@ -305,7 +297,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Update Collection
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID.
      * @param name Collection name. Max length: 128 chars.
      * @param permission Permissions type model to use for reading documents in this collection. You can use collection-level permission set once on the collection using the `read` and `write` params, or you can set document-level permission where each document read and write params will decide who has access to read and write to each document individually. [learn more about permissions](https://appwrite.io/docs/permissions) and get a full list of available permissions.
@@ -317,7 +308,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun updateCollection(
-		databaseId: String,
 		collectionId: String,
 		name: String,
 		permission: String,
@@ -352,14 +342,12 @@ class Databases(client: Client) : Service(client) {
     /**
      * Delete Collection
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID.
      * @return [Any]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun deleteCollection(
-		databaseId: String,
 		collectionId: String
 	): Any {
         val path = "/databases/{databaseId}/collections/{collectionId}".replace("{databaseId}", databaseId).replace("{collectionId}", collectionId)
@@ -380,14 +368,12 @@ class Databases(client: Client) : Service(client) {
     /**
      * List Attributes
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @return [io.appwrite.models.AttributeList]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun listAttributes(
-		databaseId: String,
 		collectionId: String
 	): io.appwrite.models.AttributeList {
         val path = "/databases/{databaseId}/collections/{collectionId}/attributes".replace("{databaseId}", databaseId).replace("{collectionId}", collectionId)
@@ -412,7 +398,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create Boolean Attribute
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
      * @param required Is attribute required?
@@ -423,7 +408,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createBooleanAttribute(
-		databaseId: String,
 		collectionId: String,
 		key: String,
 		required: Boolean,
@@ -456,7 +440,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create Email Attribute
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
      * @param required Is attribute required?
@@ -467,7 +450,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createEmailAttribute(
-		databaseId: String,
 		collectionId: String,
 		key: String,
 		required: Boolean,
@@ -500,7 +482,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create Enum Attribute
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
      * @param elements Array of elements in enumerated type. Uses length of longest element to determine size. Maximum of 100 elements are allowed, each 4096 characters long.
@@ -512,7 +493,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createEnumAttribute(
-		databaseId: String,
 		collectionId: String,
 		key: String,
 		elements: List<Any>,
@@ -547,7 +527,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create Float Attribute
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
      * @param required Is attribute required?
@@ -560,7 +539,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createFloatAttribute(
-		databaseId: String,
 		collectionId: String,
 		key: String,
 		required: Boolean,
@@ -597,7 +575,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create Integer Attribute
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
      * @param required Is attribute required?
@@ -610,7 +587,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createIntegerAttribute(
-		databaseId: String,
 		collectionId: String,
 		key: String,
 		required: Boolean,
@@ -647,7 +623,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create IP Address Attribute
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
      * @param required Is attribute required?
@@ -658,7 +633,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createIpAttribute(
-		databaseId: String,
 		collectionId: String,
 		key: String,
 		required: Boolean,
@@ -691,7 +665,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create String Attribute
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
      * @param size Attribute size for text attributes, in number of characters.
@@ -703,7 +676,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createStringAttribute(
-		databaseId: String,
 		collectionId: String,
 		key: String,
 		size: Long,
@@ -738,7 +710,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create URL Attribute
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
      * @param required Is attribute required?
@@ -749,7 +720,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createUrlAttribute(
-		databaseId: String,
 		collectionId: String,
 		key: String,
 		required: Boolean,
@@ -782,7 +752,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Get Attribute
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
      * @return [Any]     
@@ -790,7 +759,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun getAttribute(
-		databaseId: String,
 		collectionId: String,
 		key: String
 	): Any {
@@ -812,7 +780,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Delete Attribute
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Attribute Key.
      * @return [Any]     
@@ -820,7 +787,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun deleteAttribute(
-		databaseId: String,
 		collectionId: String,
 		key: String
 	): Any {
@@ -842,13 +808,12 @@ class Databases(client: Client) : Service(client) {
     /**
      * List Documents
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param queries Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/database#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long.
      * @param limit Maximum number of documents to return in response. By default will return maximum 25 results. Maximum of 100 results allowed per request.
      * @param offset Offset value. The default value is 0. Use this value to manage pagination. [learn more about pagination](https://appwrite.io/docs/pagination)
      * @param cursor ID of the document used as the starting point for the query, excluding the document itself. Should be used for efficient pagination when working with large sets of data. [learn more about pagination](https://appwrite.io/docs/pagination)
-     * @param cursorDirection Direction of the cursor.
+     * @param cursorDirection Direction of the cursor, can be either &#039;before&#039; or &#039;after&#039;.
      * @param orderAttributes Array of attributes used to sort results. Maximum of 100 order attributes are allowed, each 4096 characters long.
      * @param orderTypes Array of order directions for sorting attribtues. Possible values are DESC for descending order, or ASC for ascending order. Maximum of 100 order types are allowed.
      * @return [io.appwrite.models.DocumentList]     
@@ -856,7 +821,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun listDocuments(
-		databaseId: String,
 		collectionId: String,
 		queries: List<Any>? = null,
 		limit: Long? = null,
@@ -895,7 +859,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create Document
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection). Make sure to define attributes before creating documents.
      * @param documentId Document ID. Choose your own unique ID or pass the string &quot;unique()&quot; to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can&#039;t start with a special char. Max length is 36 chars.
      * @param data Document data as JSON object.
@@ -906,7 +869,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createDocument(
-		databaseId: String,
 		collectionId: String,
 		documentId: String,
 		data: Any,
@@ -939,7 +901,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Get Document
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param documentId Document ID.
      * @return [io.appwrite.models.Document]     
@@ -947,7 +908,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun getDocument(
-		databaseId: String,
 		collectionId: String,
 		documentId: String
 	): io.appwrite.models.Document {
@@ -973,7 +933,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Update Document
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID.
      * @param documentId Document ID.
      * @param data Document data as JSON object. Include only attribute and value pairs to be updated.
@@ -984,7 +943,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun updateDocument(
-		databaseId: String,
 		collectionId: String,
 		documentId: String,
 		data: Any? = null,
@@ -1016,7 +974,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Delete Document
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param documentId Document ID.
      * @return [Any]     
@@ -1024,7 +981,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun deleteDocument(
-		databaseId: String,
 		collectionId: String,
 		documentId: String
 	): Any {
@@ -1046,14 +1002,12 @@ class Databases(client: Client) : Service(client) {
     /**
      * List Indexes
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @return [io.appwrite.models.IndexList]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun listIndexes(
-		databaseId: String,
 		collectionId: String
 	): io.appwrite.models.IndexList {
         val path = "/databases/{databaseId}/collections/{collectionId}/indexes".replace("{databaseId}", databaseId).replace("{collectionId}", collectionId)
@@ -1078,7 +1032,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Create Index
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Index Key.
      * @param type Index type.
@@ -1089,7 +1042,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun createIndex(
-		databaseId: String,
 		collectionId: String,
 		key: String,
 		type: String,
@@ -1122,7 +1074,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Get Index
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Index Key.
      * @return [io.appwrite.models.Index]     
@@ -1130,7 +1081,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun getIndex(
-		databaseId: String,
 		collectionId: String,
 		key: String
 	): io.appwrite.models.Index {
@@ -1156,7 +1106,6 @@ class Databases(client: Client) : Service(client) {
     /**
      * Delete Index
      *
-     * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/database#createCollection).
      * @param key Index Key.
      * @return [Any]     
@@ -1164,7 +1113,6 @@ class Databases(client: Client) : Service(client) {
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun deleteIndex(
-		databaseId: String,
 		collectionId: String,
 		key: String
 	): Any {

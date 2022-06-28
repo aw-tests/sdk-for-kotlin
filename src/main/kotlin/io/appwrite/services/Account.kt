@@ -6,7 +6,9 @@ import okhttp3.Cookie
 import okhttp3.Response
 import java.io.File
 
-class Account(client: Client) : Service(client) {
+class Account : Service {
+
+    public constructor (client: Client) : super(client) { }
 
     /**
      * Get Account
