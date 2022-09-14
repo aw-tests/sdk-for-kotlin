@@ -16,32 +16,20 @@ class Functions : Service {
      * Get a list of all the project's functions. You can use the query params to
      * filter your results.
      *
+     * @param queries Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, enabled, runtime, deployment, schedule, scheduleNext, schedulePrevious, timeout
      * @param search Search term to filter your list results. Max length: 256 chars.
-     * @param limit Maximum number of functions to return in response. By default will return maximum 25 results. Maximum of 100 results allowed per request.
-     * @param offset Offset value. The default value is 0. Use this value to manage pagination. [learn more about pagination](https://appwrite.io/docs/pagination)
-     * @param cursor ID of the function used as the starting point for the query, excluding the function itself. Should be used for efficient pagination when working with large sets of data. [learn more about pagination](https://appwrite.io/docs/pagination)
-     * @param cursorDirection Direction of the cursor, can be either &#039;before&#039; or &#039;after&#039;.
-     * @param orderType Order result by ASC or DESC order.
      * @return [io.appwrite.models.FunctionList]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun list(
-		search: String? = null,
-		limit: Long? = null,
-		offset: Long? = null,
-		cursor: String? = null,
-		cursorDirection: String? = null,
-		orderType: String? = null
+		queries: List<String>? = null,
+		search: String? = null
 	): io.appwrite.models.FunctionList {
         val path = "/functions"
         val params = mutableMapOf<String, Any?>(
-            "search" to search,
-            "limit" to limit,
-            "offset" to offset,
-            "cursor" to cursor,
-            "cursorDirection" to cursorDirection,
-            "orderType" to orderType
+            "queries" to queries,
+            "search" to search
         )
         val headers = mutableMapOf(
             "content-type" to "application/json"
@@ -66,14 +54,14 @@ class Functions : Service {
      * [permissions](/docs/permissions) to allow different project users or team
      * with access to execute the function using the client API.
      *
-     * @param functionId Function ID. Choose your own unique ID or pass the string &quot;unique()&quot; to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can&#039;t start with a special char. Max length is 36 chars.
+     * @param functionId Function ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param name Function name. Max length: 128 chars.
-     * @param execute An array of strings with execution permissions. By default no user is granted with any execute permissions. [learn more about permissions](https://appwrite.io/docs/permissions) and get a full list of available permissions. Maximum of 100 scopes are allowed, each 64 characters long.
+     * @param execute An array of strings with execution roles. By default no user is granted with any execute permissions. [learn more about permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 64 characters long.
      * @param runtime Execution runtime.
-     * @param vars Key-value JSON object that will be passed to the function as environment variables.
      * @param events Events list. Maximum of 100 events are allowed.
      * @param schedule Schedule CRON syntax.
      * @param timeout Function maximum execution time in seconds.
+     * @param enabled Is function enabled?
      * @return [io.appwrite.models.Function]     
      */
     @JvmOverloads
@@ -81,12 +69,12 @@ class Functions : Service {
     suspend fun create(
 		functionId: String,
 		name: String,
-		execute: List<Any>,
+		execute: List<String>,
 		runtime: String,
-		vars: Any? = null,
-		events: List<Any>? = null,
+		events: List<String>? = null,
 		schedule: String? = null,
-		timeout: Long? = null
+		timeout: Long? = null,
+		enabled: Boolean? = null
 	): io.appwrite.models.Function {
         val path = "/functions"
         val params = mutableMapOf<String, Any?>(
@@ -94,10 +82,10 @@ class Functions : Service {
             "name" to name,
             "execute" to execute,
             "runtime" to runtime,
-            "vars" to vars,
             "events" to events,
             "schedule" to schedule,
-            "timeout" to timeout
+            "timeout" to timeout,
+            "enabled" to enabled
         )
         val headers = mutableMapOf(
             "content-type" to "application/json"
@@ -183,11 +171,11 @@ class Functions : Service {
      *
      * @param functionId Function ID.
      * @param name Function name. Max length: 128 chars.
-     * @param execute An array of strings with execution permissions. By default no user is granted with any execute permissions. [learn more about permissions](https://appwrite.io/docs/permissions) and get a full list of available permissions. Maximum of 100 scopes are allowed, each 64 characters long.
-     * @param vars Key-value JSON object that will be passed to the function as environment variables.
+     * @param execute An array of strings with execution roles. By default no user is granted with any execute permissions. [learn more about permissions](https://appwrite.io/docs/permissions). Maximum of 100 roles are allowed, each 64 characters long.
      * @param events Events list. Maximum of 100 events are allowed.
      * @param schedule Schedule CRON syntax.
      * @param timeout Maximum execution time in seconds.
+     * @param enabled Is function enabled?
      * @return [io.appwrite.models.Function]     
      */
     @JvmOverloads
@@ -195,20 +183,20 @@ class Functions : Service {
     suspend fun update(
 		functionId: String,
 		name: String,
-		execute: List<Any>,
-		vars: Any? = null,
-		events: List<Any>? = null,
+		execute: List<String>,
+		events: List<String>? = null,
 		schedule: String? = null,
-		timeout: Long? = null
+		timeout: Long? = null,
+		enabled: Boolean? = null
 	): io.appwrite.models.Function {
         val path = "/functions/{functionId}".replace("{functionId}", functionId)
         val params = mutableMapOf<String, Any?>(
             "name" to name,
             "execute" to execute,
-            "vars" to vars,
             "events" to events,
             "schedule" to schedule,
-            "timeout" to timeout
+            "timeout" to timeout,
+            "enabled" to enabled
         )
         val headers = mutableMapOf(
             "content-type" to "application/json"
@@ -261,33 +249,21 @@ class Functions : Service {
      * params to filter your results.
      *
      * @param functionId Function ID.
+     * @param queries Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: entrypoint, size, buildId, activate
      * @param search Search term to filter your list results. Max length: 256 chars.
-     * @param limit Maximum number of deployments to return in response. By default will return maximum 25 results. Maximum of 100 results allowed per request.
-     * @param offset Offset value. The default value is 0. Use this value to manage pagination. [learn more about pagination](https://appwrite.io/docs/pagination)
-     * @param cursor ID of the deployment used as the starting point for the query, excluding the deployment itself. Should be used for efficient pagination when working with large sets of data. [learn more about pagination](https://appwrite.io/docs/pagination)
-     * @param cursorDirection Direction of the cursor, can be either &#039;before&#039; or &#039;after&#039;.
-     * @param orderType Order result by ASC or DESC order.
      * @return [io.appwrite.models.DeploymentList]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun listDeployments(
 		functionId: String,
-		search: String? = null,
-		limit: Long? = null,
-		offset: Long? = null,
-		cursor: String? = null,
-		cursorDirection: String? = null,
-		orderType: String? = null
+		queries: List<String>? = null,
+		search: String? = null
 	): io.appwrite.models.DeploymentList {
         val path = "/functions/{functionId}/deployments".replace("{functionId}", functionId)
         val params = mutableMapOf<String, Any?>(
-            "search" to search,
-            "limit" to limit,
-            "offset" to offset,
-            "cursor" to cursor,
-            "cursorDirection" to cursorDirection,
-            "orderType" to orderType
+            "queries" to queries,
+            "search" to search
         )
         val headers = mutableMapOf(
             "content-type" to "application/json"
@@ -366,29 +342,29 @@ class Functions : Service {
      *
      * @param functionId Function ID.
      * @param deploymentId Deployment ID.
-     * @return [io.appwrite.models.DeploymentList]     
+     * @return [io.appwrite.models.Deployment]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun getDeployment(
 		functionId: String,
 		deploymentId: String
-	): io.appwrite.models.DeploymentList {
+	): io.appwrite.models.Deployment {
         val path = "/functions/{functionId}/deployments/{deploymentId}".replace("{functionId}", functionId).replace("{deploymentId}", deploymentId)
         val params = mutableMapOf<String, Any?>(
         )
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.DeploymentList = {
-            io.appwrite.models.DeploymentList.from(map = it)
+        val converter: (Map<String, Any>) -> io.appwrite.models.Deployment = {
+            io.appwrite.models.Deployment.from(map = it)
         }
         return client.call(
             "GET",
             path,
             headers,
             params,
-            responseType = io.appwrite.models.DeploymentList::class.java,
+            responseType = io.appwrite.models.Deployment::class.java,
             converter,
         )
     }
@@ -498,30 +474,21 @@ class Functions : Service {
      * different API modes](/docs/admin).
      *
      * @param functionId Function ID.
-     * @param limit Maximum number of executions to return in response. By default will return maximum 25 results. Maximum of 100 results allowed per request.
-     * @param offset Offset value. The default value is 0. Use this value to manage pagination. [learn more about pagination](https://appwrite.io/docs/pagination)
+     * @param queries Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: trigger, status, statusCode, duration
      * @param search Search term to filter your list results. Max length: 256 chars.
-     * @param cursor ID of the execution used as the starting point for the query, excluding the execution itself. Should be used for efficient pagination when working with large sets of data. [learn more about pagination](https://appwrite.io/docs/pagination)
-     * @param cursorDirection Direction of the cursor, can be either &#039;before&#039; or &#039;after&#039;.
      * @return [io.appwrite.models.ExecutionList]     
      */
     @JvmOverloads
     @Throws(AppwriteException::class)
     suspend fun listExecutions(
 		functionId: String,
-		limit: Long? = null,
-		offset: Long? = null,
-		search: String? = null,
-		cursor: String? = null,
-		cursorDirection: String? = null
+		queries: List<String>? = null,
+		search: String? = null
 	): io.appwrite.models.ExecutionList {
         val path = "/functions/{functionId}/executions".replace("{functionId}", functionId)
         val params = mutableMapOf<String, Any?>(
-            "limit" to limit,
-            "offset" to offset,
-            "search" to search,
-            "cursor" to cursor,
-            "cursorDirection" to cursorDirection
+            "queries" to queries,
+            "search" to search
         )
         val headers = mutableMapOf(
             "content-type" to "application/json"
@@ -549,7 +516,7 @@ class Functions : Service {
      *
      * @param functionId Function ID.
      * @param data String of custom data to send to function.
-     * @param async Execute code asynchronously. Default value is true.
+     * @param async Execute code in the background. Default value is false.
      * @return [io.appwrite.models.Execution]     
      */
     @JvmOverloads
@@ -611,6 +578,181 @@ class Functions : Service {
             params,
             responseType = io.appwrite.models.Execution::class.java,
             converter,
+        )
+    }
+    
+    /**
+     * List Variables
+     *
+     * Get a list of all variables of a specific function.
+     *
+     * @param functionId Function unique ID.
+     * @return [io.appwrite.models.VariableList]     
+     */
+    @JvmOverloads
+    @Throws(AppwriteException::class)
+    suspend fun listVariables(
+		functionId: String
+	): io.appwrite.models.VariableList {
+        val path = "/functions/{functionId}/variables".replace("{functionId}", functionId)
+        val params = mutableMapOf<String, Any?>(
+        )
+        val headers = mutableMapOf(
+            "content-type" to "application/json"
+        )
+        val converter: (Map<String, Any>) -> io.appwrite.models.VariableList = {
+            io.appwrite.models.VariableList.from(map = it)
+        }
+        return client.call(
+            "GET",
+            path,
+            headers,
+            params,
+            responseType = io.appwrite.models.VariableList::class.java,
+            converter,
+        )
+    }
+    
+    /**
+     * Create Variable
+     *
+     * Create a new function variable. These variables can be accessed within
+     * function in the `env` object under the request variable.
+     *
+     * @param functionId Function unique ID.
+     * @param key Variable key. Max length: 255 chars.
+     * @param value Variable value. Max length: 8192 chars.
+     * @return [io.appwrite.models.Variable]     
+     */
+    @JvmOverloads
+    @Throws(AppwriteException::class)
+    suspend fun createVariable(
+		functionId: String,
+		key: String,
+		value: String
+	): io.appwrite.models.Variable {
+        val path = "/functions/{functionId}/variables".replace("{functionId}", functionId)
+        val params = mutableMapOf<String, Any?>(
+            "key" to key,
+            "value" to value
+        )
+        val headers = mutableMapOf(
+            "content-type" to "application/json"
+        )
+        val converter: (Map<String, Any>) -> io.appwrite.models.Variable = {
+            io.appwrite.models.Variable.from(map = it)
+        }
+        return client.call(
+            "POST",
+            path,
+            headers,
+            params,
+            responseType = io.appwrite.models.Variable::class.java,
+            converter,
+        )
+    }
+    
+    /**
+     * Get Variable
+     *
+     * Get a variable by its unique ID.
+     *
+     * @param functionId Function unique ID.
+     * @param variableId Variable unique ID.
+     * @return [io.appwrite.models.Variable]     
+     */
+    @JvmOverloads
+    @Throws(AppwriteException::class)
+    suspend fun getVariable(
+		functionId: String,
+		variableId: String
+	): io.appwrite.models.Variable {
+        val path = "/functions/{functionId}/variables/{variableId}".replace("{functionId}", functionId).replace("{variableId}", variableId)
+        val params = mutableMapOf<String, Any?>(
+        )
+        val headers = mutableMapOf(
+            "content-type" to "application/json"
+        )
+        val converter: (Map<String, Any>) -> io.appwrite.models.Variable = {
+            io.appwrite.models.Variable.from(map = it)
+        }
+        return client.call(
+            "GET",
+            path,
+            headers,
+            params,
+            responseType = io.appwrite.models.Variable::class.java,
+            converter,
+        )
+    }
+    
+    /**
+     * Update Variable
+     *
+     * Update variable by its unique ID.
+     *
+     * @param functionId Function unique ID.
+     * @param variableId Variable unique ID.
+     * @param key Variable key. Max length: 255 chars.
+     * @param value Variable value. Max length: 8192 chars.
+     * @return [io.appwrite.models.Variable]     
+     */
+    @JvmOverloads
+    @Throws(AppwriteException::class)
+    suspend fun updateVariable(
+		functionId: String,
+		variableId: String,
+		key: String,
+		value: String? = null
+	): io.appwrite.models.Variable {
+        val path = "/functions/{functionId}/variables/{variableId}".replace("{functionId}", functionId).replace("{variableId}", variableId)
+        val params = mutableMapOf<String, Any?>(
+            "key" to key,
+            "value" to value
+        )
+        val headers = mutableMapOf(
+            "content-type" to "application/json"
+        )
+        val converter: (Map<String, Any>) -> io.appwrite.models.Variable = {
+            io.appwrite.models.Variable.from(map = it)
+        }
+        return client.call(
+            "PUT",
+            path,
+            headers,
+            params,
+            responseType = io.appwrite.models.Variable::class.java,
+            converter,
+        )
+    }
+    
+    /**
+     * Delete Variable
+     *
+     * Delete a variable by its unique ID.
+     *
+     * @param functionId Function unique ID.
+     * @param variableId Variable unique ID.
+     * @return [Any]     
+     */
+    @JvmOverloads
+    @Throws(AppwriteException::class)
+    suspend fun deleteVariable(
+		functionId: String,
+		variableId: String
+	): Any {
+        val path = "/functions/{functionId}/variables/{variableId}".replace("{functionId}", functionId).replace("{variableId}", variableId)
+        val params = mutableMapOf<String, Any?>(
+        )
+        val headers = mutableMapOf(
+            "content-type" to "application/json"
+        )
+        return client.call(
+            "DELETE",
+            path,
+            headers,
+            params,
+            responseType = Any::class.java,
         )
     }
     
