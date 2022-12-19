@@ -21,7 +21,6 @@ class Databases : Service {
      * @return [io.appwrite.models.DatabaseList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun list(
 		queries: List<String>? = null,
 		search: String? = null
@@ -34,8 +33,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.DatabaseList = {
-            io.appwrite.models.DatabaseList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.DatabaseList = {
+            io.appwrite.models.DatabaseList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -53,12 +52,11 @@ class Databases : Service {
      * Create a new Database.
      * 
      *
-     * @param databaseId Unique Id. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param databaseId Unique Id. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param name Collection name. Max length: 128 chars.
      * @return [io.appwrite.models.Database]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun create(
 		databaseId: String,
 		name: String
@@ -71,8 +69,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Database = {
-            io.appwrite.models.Database.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Database = {
+            io.appwrite.models.Database.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -94,7 +92,6 @@ class Databases : Service {
      * @return [io.appwrite.models.Database]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun get(
 		databaseId: String
 	): io.appwrite.models.Database {
@@ -104,8 +101,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Database = {
-            io.appwrite.models.Database.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Database = {
+            io.appwrite.models.Database.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -123,11 +120,10 @@ class Databases : Service {
      * Update a database by its unique ID.
      *
      * @param databaseId Database ID.
-     * @param name Collection name. Max length: 128 chars.
+     * @param name Database name. Max length: 128 chars.
      * @return [io.appwrite.models.Database]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun update(
 		databaseId: String,
 		name: String
@@ -139,8 +135,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Database = {
-            io.appwrite.models.Database.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Database = {
+            io.appwrite.models.Database.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PUT",
@@ -162,7 +158,6 @@ class Databases : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun delete(
 		databaseId: String
 	): Any {
@@ -193,7 +188,6 @@ class Databases : Service {
      * @return [io.appwrite.models.CollectionList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun listCollections(
 		databaseId: String,
 		queries: List<String>? = null,
@@ -207,8 +201,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.CollectionList = {
-            io.appwrite.models.CollectionList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.CollectionList = {
+            io.appwrite.models.CollectionList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -229,14 +223,13 @@ class Databases : Service {
      * directly from your database console.
      *
      * @param databaseId Database ID.
-     * @param collectionId Unique Id. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param collectionId Unique Id. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param name Collection name. Max length: 128 chars.
      * @param permissions An array of permissions strings. By default no user is granted with any permissions. [Learn more about permissions](/docs/permissions).
      * @param documentSecurity Enables configuring permissions for individual documents. A user needs one of document or collection level permissions to access a document. [Learn more about permissions](/docs/permissions).
      * @return [io.appwrite.models.Collection]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createCollection(
 		databaseId: String,
 		collectionId: String,
@@ -254,8 +247,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Collection = {
-            io.appwrite.models.Collection.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Collection = {
+            io.appwrite.models.Collection.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -278,7 +271,6 @@ class Databases : Service {
      * @return [io.appwrite.models.Collection]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun getCollection(
 		databaseId: String,
 		collectionId: String
@@ -289,8 +281,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Collection = {
-            io.appwrite.models.Collection.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Collection = {
+            io.appwrite.models.Collection.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -316,7 +308,6 @@ class Databases : Service {
      * @return [io.appwrite.models.Collection]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updateCollection(
 		databaseId: String,
 		collectionId: String,
@@ -335,8 +326,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Collection = {
-            io.appwrite.models.Collection.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Collection = {
+            io.appwrite.models.Collection.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PUT",
@@ -359,7 +350,6 @@ class Databases : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun deleteCollection(
 		databaseId: String,
 		collectionId: String
@@ -387,7 +377,6 @@ class Databases : Service {
      * @return [io.appwrite.models.AttributeList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun listAttributes(
 		databaseId: String,
 		collectionId: String
@@ -398,8 +387,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeList = {
-            io.appwrite.models.AttributeList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.AttributeList = {
+            io.appwrite.models.AttributeList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -426,7 +415,6 @@ class Databases : Service {
      * @return [io.appwrite.models.AttributeBoolean]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createBooleanAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -445,8 +433,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeBoolean = {
-            io.appwrite.models.AttributeBoolean.from(map = it)
+        val converter: (Any) -> io.appwrite.models.AttributeBoolean = {
+            io.appwrite.models.AttributeBoolean.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -470,7 +458,6 @@ class Databases : Service {
      * @return [io.appwrite.models.AttributeDatetime]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createDatetimeAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -489,8 +476,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeDatetime = {
-            io.appwrite.models.AttributeDatetime.from(map = it)
+        val converter: (Any) -> io.appwrite.models.AttributeDatetime = {
+            io.appwrite.models.AttributeDatetime.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -517,7 +504,6 @@ class Databases : Service {
      * @return [io.appwrite.models.AttributeEmail]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createEmailAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -536,8 +522,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeEmail = {
-            io.appwrite.models.AttributeEmail.from(map = it)
+        val converter: (Any) -> io.appwrite.models.AttributeEmail = {
+            io.appwrite.models.AttributeEmail.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -562,7 +548,6 @@ class Databases : Service {
      * @return [io.appwrite.models.AttributeEnum]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createEnumAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -583,8 +568,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeEnum = {
-            io.appwrite.models.AttributeEnum.from(map = it)
+        val converter: (Any) -> io.appwrite.models.AttributeEnum = {
+            io.appwrite.models.AttributeEnum.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -614,7 +599,6 @@ class Databases : Service {
      * @return [io.appwrite.models.AttributeFloat]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createFloatAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -637,8 +621,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeFloat = {
-            io.appwrite.models.AttributeFloat.from(map = it)
+        val converter: (Any) -> io.appwrite.models.AttributeFloat = {
+            io.appwrite.models.AttributeFloat.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -668,7 +652,6 @@ class Databases : Service {
      * @return [io.appwrite.models.AttributeInteger]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createIntegerAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -691,8 +674,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeInteger = {
-            io.appwrite.models.AttributeInteger.from(map = it)
+        val converter: (Any) -> io.appwrite.models.AttributeInteger = {
+            io.appwrite.models.AttributeInteger.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -719,7 +702,6 @@ class Databases : Service {
      * @return [io.appwrite.models.AttributeIp]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createIpAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -738,8 +720,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeIp = {
-            io.appwrite.models.AttributeIp.from(map = it)
+        val converter: (Any) -> io.appwrite.models.AttributeIp = {
+            io.appwrite.models.AttributeIp.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -767,7 +749,6 @@ class Databases : Service {
      * @return [io.appwrite.models.AttributeString]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createStringAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -788,8 +769,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeString = {
-            io.appwrite.models.AttributeString.from(map = it)
+        val converter: (Any) -> io.appwrite.models.AttributeString = {
+            io.appwrite.models.AttributeString.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -816,7 +797,6 @@ class Databases : Service {
      * @return [io.appwrite.models.AttributeUrl]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createUrlAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -835,8 +815,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.AttributeUrl = {
-            io.appwrite.models.AttributeUrl.from(map = it)
+        val converter: (Any) -> io.appwrite.models.AttributeUrl = {
+            io.appwrite.models.AttributeUrl.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -857,7 +837,6 @@ class Databases : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun getAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -887,7 +866,6 @@ class Databases : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun deleteAttribute(
 		databaseId: String,
 		collectionId: String,
@@ -912,9 +890,7 @@ class Databases : Service {
      * List Documents
      *
      * Get a list of all the user's documents in a given collection. You can use
-     * the query params to filter your results. On admin mode, this endpoint will
-     * return a list of all of documents belonging to the provided collectionId.
-     * [Learn more about different API modes](/docs/admin).
+     * the query params to filter your results.
      *
      * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection).
@@ -922,7 +898,6 @@ class Databases : Service {
      * @return [io.appwrite.models.DocumentList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun listDocuments(
 		databaseId: String,
 		collectionId: String,
@@ -935,8 +910,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.DocumentList = {
-            io.appwrite.models.DocumentList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.DocumentList = {
+            io.appwrite.models.DocumentList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -958,13 +933,12 @@ class Databases : Service {
      *
      * @param databaseId Database ID.
      * @param collectionId Collection ID. You can create a new collection using the Database service [server integration](https://appwrite.io/docs/server/databases#databasesCreateCollection). Make sure to define attributes before creating documents.
-     * @param documentId Document ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param documentId Document ID. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param data Document data as JSON object.
      * @param permissions An array of permissions strings. By default the current user is granted with all permissions. [Learn more about permissions](/docs/permissions).
      * @return [io.appwrite.models.Document]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createDocument(
 		databaseId: String,
 		collectionId: String,
@@ -981,8 +955,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Document = {
-            io.appwrite.models.Document.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Document = {
+            io.appwrite.models.Document.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -1006,7 +980,6 @@ class Databases : Service {
      * @return [io.appwrite.models.Document]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun getDocument(
 		databaseId: String,
 		collectionId: String,
@@ -1018,8 +991,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Document = {
-            io.appwrite.models.Document.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Document = {
+            io.appwrite.models.Document.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -1045,7 +1018,6 @@ class Databases : Service {
      * @return [io.appwrite.models.Document]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updateDocument(
 		databaseId: String,
 		collectionId: String,
@@ -1061,8 +1033,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Document = {
-            io.appwrite.models.Document.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Document = {
+            io.appwrite.models.Document.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PATCH",
@@ -1085,7 +1057,6 @@ class Databases : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun deleteDocument(
 		databaseId: String,
 		collectionId: String,
@@ -1114,7 +1085,6 @@ class Databases : Service {
      * @return [io.appwrite.models.IndexList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun listIndexes(
 		databaseId: String,
 		collectionId: String
@@ -1125,8 +1095,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.IndexList = {
-            io.appwrite.models.IndexList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.IndexList = {
+            io.appwrite.models.IndexList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -1150,7 +1120,6 @@ class Databases : Service {
      * @return [io.appwrite.models.Index]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createIndex(
 		databaseId: String,
 		collectionId: String,
@@ -1169,8 +1138,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Index = {
-            io.appwrite.models.Index.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Index = {
+            io.appwrite.models.Index.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -1191,7 +1160,6 @@ class Databases : Service {
      * @return [io.appwrite.models.Index]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun getIndex(
 		databaseId: String,
 		collectionId: String,
@@ -1203,8 +1171,8 @@ class Databases : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Index = {
-            io.appwrite.models.Index.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Index = {
+            io.appwrite.models.Index.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -1225,7 +1193,6 @@ class Databases : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun deleteIndex(
 		databaseId: String,
 		collectionId: String,

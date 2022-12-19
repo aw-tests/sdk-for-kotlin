@@ -7,6 +7,13 @@ import com.google.gson.annotations.SerializedName
  */
 data class AlgoArgon2(
     /**
+     * Algo type.
+     *
+     */
+    @SerializedName("type")
+    val type: String,
+
+    /**
      * Memory used to compute hash.
      *
      */
@@ -30,6 +37,7 @@ data class AlgoArgon2(
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun from(map: Map<String, Any>) = AlgoArgon2(
+            type = map["type"] as String,
             memoryCost = (map["memoryCost"] as Number).toLong(),
             timeCost = (map["timeCost"] as Number).toLong(),
             threads = (map["threads"] as Number).toLong()
@@ -37,6 +45,7 @@ data class AlgoArgon2(
     }
 
     fun toMap(): Map<String, Any> = mapOf(
+        "type" to type as Any,
         "memoryCost" to memoryCost as Any,
         "timeCost" to timeCost as Any,
         "threads" to threads as Any

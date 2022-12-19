@@ -23,7 +23,6 @@ class Storage : Service {
      * @return [io.appwrite.models.BucketList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun listBuckets(
 		queries: List<String>? = null,
 		search: String? = null
@@ -36,8 +35,8 @@ class Storage : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.BucketList = {
-            io.appwrite.models.BucketList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.BucketList = {
+            io.appwrite.models.BucketList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -54,7 +53,7 @@ class Storage : Service {
      *
      * Create a new storage bucket.
      *
-     * @param bucketId Unique Id. Choose your own unique ID or pass the string `unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param bucketId Unique Id. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param name Bucket name
      * @param permissions An array of permission strings. By default no user is granted with any permissions. [Learn more about permissions](/docs/permissions).
      * @param fileSecurity Enables configuring permissions for individual file. A user needs one of file or bucket level permissions to access a file. [Learn more about permissions](/docs/permissions).
@@ -67,7 +66,6 @@ class Storage : Service {
      * @return [io.appwrite.models.Bucket]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createBucket(
 		bucketId: String,
 		name: String,
@@ -96,8 +94,8 @@ class Storage : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Bucket = {
-            io.appwrite.models.Bucket.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Bucket = {
+            io.appwrite.models.Bucket.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -119,7 +117,6 @@ class Storage : Service {
      * @return [io.appwrite.models.Bucket]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun getBucket(
 		bucketId: String
 	): io.appwrite.models.Bucket {
@@ -129,8 +126,8 @@ class Storage : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Bucket = {
-            io.appwrite.models.Bucket.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Bucket = {
+            io.appwrite.models.Bucket.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -160,7 +157,6 @@ class Storage : Service {
      * @return [io.appwrite.models.Bucket]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updateBucket(
 		bucketId: String,
 		name: String,
@@ -188,8 +184,8 @@ class Storage : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Bucket = {
-            io.appwrite.models.Bucket.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Bucket = {
+            io.appwrite.models.Bucket.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PUT",
@@ -210,7 +206,6 @@ class Storage : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun deleteBucket(
 		bucketId: String
 	): Any {
@@ -233,8 +228,7 @@ class Storage : Service {
      * List Files
      *
      * Get a list of all the user files. You can use the query params to filter
-     * your results. On admin mode, this endpoint will return a list of all of the
-     * project's files. [Learn more about different API modes](/docs/admin).
+     * your results.
      *
      * @param bucketId Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](/docs/server/storage#createBucket).
      * @param queries Array of query strings generated using the Query class provided by the SDK. [Learn more about queries](https://appwrite.io/docs/databases#querying-documents). Maximum of 100 queries are allowed, each 4096 characters long. You may filter on the following attributes: name, signature, mimeType, sizeOriginal, chunksTotal, chunksUploaded
@@ -242,7 +236,6 @@ class Storage : Service {
      * @return [io.appwrite.models.FileList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun listFiles(
 		bucketId: String,
 		queries: List<String>? = null,
@@ -256,8 +249,8 @@ class Storage : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.FileList = {
-            io.appwrite.models.FileList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.FileList = {
+            io.appwrite.models.FileList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -292,13 +285,12 @@ class Storage : Service {
      * 
      *
      * @param bucketId Storage bucket unique ID. You can create a new storage bucket using the Storage service [server integration](/docs/server/storage#createBucket).
-     * @param fileId File ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param fileId File ID. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param file Binary file.
      * @param permissions An array of permission strings. By default the current user is granted with all permissions. [Learn more about permissions](/docs/permissions).
      * @return [io.appwrite.models.File]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createFile(
 		bucketId: String,
 		fileId: String,
@@ -314,8 +306,8 @@ class Storage : Service {
         val headers = mutableMapOf(
             "content-type" to "multipart/form-data"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.File = {
-            io.appwrite.models.File.from(map = it)
+        val converter: (Any) -> io.appwrite.models.File = {
+            io.appwrite.models.File.from(map = it as Map<String, Any>)
         }
         val idParamName: String? = "fileId"
         val paramName = "file"
@@ -342,7 +334,6 @@ class Storage : Service {
      * @return [io.appwrite.models.File]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun getFile(
 		bucketId: String,
 		fileId: String
@@ -353,8 +344,8 @@ class Storage : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.File = {
-            io.appwrite.models.File.from(map = it)
+        val converter: (Any) -> io.appwrite.models.File = {
+            io.appwrite.models.File.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -378,7 +369,6 @@ class Storage : Service {
      * @return [io.appwrite.models.File]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updateFile(
 		bucketId: String,
 		fileId: String,
@@ -391,8 +381,8 @@ class Storage : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.File = {
-            io.appwrite.models.File.from(map = it)
+        val converter: (Any) -> io.appwrite.models.File = {
+            io.appwrite.models.File.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PUT",
@@ -415,7 +405,6 @@ class Storage : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun deleteFile(
 		bucketId: String,
 		fileId: String
@@ -447,7 +436,6 @@ class Storage : Service {
      * @return [ByteArray]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun getFileDownload(
 		bucketId: String,
 		fileId: String
@@ -490,7 +478,6 @@ class Storage : Service {
      * @return [ByteArray]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun getFilePreview(
 		bucketId: String,
 		fileId: String,
@@ -542,7 +529,6 @@ class Storage : Service {
      * @return [ByteArray]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun getFileView(
 		bucketId: String,
 		fileId: String

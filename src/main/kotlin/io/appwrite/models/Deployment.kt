@@ -88,7 +88,14 @@ data class Deployment(
      *
      */
     @SerializedName("buildStderr")
-    val buildStderr: String
+    val buildStderr: String,
+
+    /**
+     * The current build time in seconds.
+     *
+     */
+    @SerializedName("buildTime")
+    val buildTime: Long
 ) {
     companion object {
         @Suppress("UNCHECKED_CAST")
@@ -104,7 +111,8 @@ data class Deployment(
             activate = map["activate"] as Boolean,
             status = map["status"] as String,
             buildStdout = map["buildStdout"] as String,
-            buildStderr = map["buildStderr"] as String
+            buildStderr = map["buildStderr"] as String,
+            buildTime = (map["buildTime"] as Number).toLong()
         )
     }
 
@@ -120,6 +128,7 @@ data class Deployment(
         "activate" to activate as Any,
         "status" to status as Any,
         "buildStdout" to buildStdout as Any,
-        "buildStderr" to buildStderr as Any
+        "buildStderr" to buildStderr as Any,
+        "buildTime" to buildTime as Any
     )
 }

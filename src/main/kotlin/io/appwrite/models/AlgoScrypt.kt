@@ -7,6 +7,13 @@ import com.google.gson.annotations.SerializedName
  */
 data class AlgoScrypt(
     /**
+     * Algo type.
+     *
+     */
+    @SerializedName("type")
+    val type: String,
+
+    /**
      * CPU complexity of computed hash.
      *
      */
@@ -37,6 +44,7 @@ data class AlgoScrypt(
     companion object {
         @Suppress("UNCHECKED_CAST")
         fun from(map: Map<String, Any>) = AlgoScrypt(
+            type = map["type"] as String,
             costCpu = (map["costCpu"] as Number).toLong(),
             costMemory = (map["costMemory"] as Number).toLong(),
             costParallel = (map["costParallel"] as Number).toLong(),
@@ -45,6 +53,7 @@ data class AlgoScrypt(
     }
 
     fun toMap(): Map<String, Any> = mapOf(
+        "type" to type as Any,
         "costCpu" to costCpu as Any,
         "costMemory" to costMemory as Any,
         "costParallel" to costParallel as Any,

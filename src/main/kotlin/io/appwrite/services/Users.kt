@@ -21,7 +21,6 @@ class Users : Service {
      * @return [io.appwrite.models.UserList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun list(
 		queries: List<String>? = null,
 		search: String? = null
@@ -34,8 +33,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.UserList = {
-            io.appwrite.models.UserList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.UserList = {
+            io.appwrite.models.UserList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -52,7 +51,7 @@ class Users : Service {
      *
      * Create a new user.
      *
-     * @param userId User ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param userId User ID. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param email User email.
      * @param phone Phone number. Format this number with a leading '+' and a country code, e.g., +16175551212.
      * @param password Plain text user password. Must be at least 8 chars.
@@ -60,7 +59,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun create(
 		userId: String,
 		email: String? = null,
@@ -79,8 +77,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -100,14 +98,13 @@ class Users : Service {
      * /users](/docs/server/users#usersCreate) endpoint to create users with a
      * plain text password.
      *
-     * @param userId User ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param userId User ID. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param email User email.
      * @param password User password hashed using Argon2.
      * @param name User name. Max length: 128 chars.
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createArgon2User(
 		userId: String,
 		email: String,
@@ -124,8 +121,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -145,14 +142,13 @@ class Users : Service {
      * /users](/docs/server/users#usersCreate) endpoint to create users with a
      * plain text password.
      *
-     * @param userId User ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param userId User ID. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param email User email.
      * @param password User password hashed using Bcrypt.
      * @param name User name. Max length: 128 chars.
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createBcryptUser(
 		userId: String,
 		email: String,
@@ -169,8 +165,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -190,14 +186,13 @@ class Users : Service {
      * /users](/docs/server/users#usersCreate) endpoint to create users with a
      * plain text password.
      *
-     * @param userId User ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param userId User ID. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param email User email.
      * @param password User password hashed using MD5.
      * @param name User name. Max length: 128 chars.
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createMD5User(
 		userId: String,
 		email: String,
@@ -214,8 +209,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -235,14 +230,13 @@ class Users : Service {
      * /users](/docs/server/users#usersCreate) endpoint to create users with a
      * plain text password.
      *
-     * @param userId User ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param userId User ID. Choose your own unique ID or pass the string `ID.unique()`to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param email User email.
      * @param password User password hashed using PHPass.
      * @param name User name. Max length: 128 chars.
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createPHPassUser(
 		userId: String,
 		email: String,
@@ -259,8 +253,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -280,7 +274,7 @@ class Users : Service {
      * /users](/docs/server/users#usersCreate) endpoint to create users with a
      * plain text password.
      *
-     * @param userId User ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param userId User ID. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param email User email.
      * @param password User password hashed using Scrypt.
      * @param passwordSalt Optional salt used to hash password.
@@ -292,7 +286,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createScryptUser(
 		userId: String,
 		email: String,
@@ -319,8 +312,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -340,7 +333,7 @@ class Users : Service {
      * algorithm. Use the [POST /users](/docs/server/users#usersCreate) endpoint
      * to create users with a plain text password.
      *
-     * @param userId User ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param userId User ID. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param email User email.
      * @param password User password hashed using Scrypt Modified.
      * @param passwordSalt Salt used to hash password.
@@ -350,7 +343,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createScryptModifiedUser(
 		userId: String,
 		email: String,
@@ -373,8 +365,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -394,7 +386,7 @@ class Users : Service {
      * the [POST /users](/docs/server/users#usersCreate) endpoint to create users
      * with a plain text password.
      *
-     * @param userId User ID. Choose your own unique ID or pass the string "unique()" to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
+     * @param userId User ID. Choose your own unique ID or pass the string `ID.unique()` to auto generate it. Valid chars are a-z, A-Z, 0-9, period, hyphen, and underscore. Can't start with a special char. Max length is 36 chars.
      * @param email User email.
      * @param password User password hashed using SHA.
      * @param passwordVersion Optional SHA version used to hash password. Allowed values are: 'sha1', 'sha224', 'sha256', 'sha384', 'sha512/224', 'sha512/256', 'sha512', 'sha3-224', 'sha3-256', 'sha3-384', 'sha3-512'
@@ -402,7 +394,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun createSHAUser(
 		userId: String,
 		email: String,
@@ -421,8 +412,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "POST",
@@ -443,7 +434,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun get(
 		userId: String
 	): io.appwrite.models.User {
@@ -453,8 +443,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -479,7 +469,6 @@ class Users : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun delete(
 		userId: String
 	): Any {
@@ -508,7 +497,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updateEmail(
 		userId: String,
 		email: String
@@ -520,8 +508,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PATCH",
@@ -543,7 +531,6 @@ class Users : Service {
      * @return [io.appwrite.models.LogList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun listLogs(
 		userId: String,
 		queries: List<String>? = null
@@ -555,8 +542,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.LogList = {
-            io.appwrite.models.LogList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.LogList = {
+            io.appwrite.models.LogList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -577,7 +564,6 @@ class Users : Service {
      * @return [io.appwrite.models.MembershipList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun listMemberships(
 		userId: String
 	): io.appwrite.models.MembershipList {
@@ -587,8 +573,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.MembershipList = {
-            io.appwrite.models.MembershipList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.MembershipList = {
+            io.appwrite.models.MembershipList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -610,7 +596,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updateName(
 		userId: String,
 		name: String
@@ -622,8 +607,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PATCH",
@@ -645,7 +630,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updatePassword(
 		userId: String,
 		password: String
@@ -657,8 +641,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PATCH",
@@ -680,7 +664,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updatePhone(
 		userId: String,
 		number: String
@@ -692,8 +675,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PATCH",
@@ -714,7 +697,6 @@ class Users : Service {
      * @return [io.appwrite.models.Preferences]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun getPrefs(
 		userId: String
 	): io.appwrite.models.Preferences {
@@ -724,8 +706,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Preferences = {
-            io.appwrite.models.Preferences.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Preferences = {
+            io.appwrite.models.Preferences.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -749,7 +731,6 @@ class Users : Service {
      * @return [io.appwrite.models.Preferences]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updatePrefs(
 		userId: String,
 		prefs: Any
@@ -761,8 +742,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.Preferences = {
-            io.appwrite.models.Preferences.from(map = it)
+        val converter: (Any) -> io.appwrite.models.Preferences = {
+            io.appwrite.models.Preferences.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PATCH",
@@ -783,7 +764,6 @@ class Users : Service {
      * @return [io.appwrite.models.SessionList]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun listSessions(
 		userId: String
 	): io.appwrite.models.SessionList {
@@ -793,8 +773,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.SessionList = {
-            io.appwrite.models.SessionList.from(map = it)
+        val converter: (Any) -> io.appwrite.models.SessionList = {
+            io.appwrite.models.SessionList.from(map = it as Map<String, Any>)
         }
         return client.call(
             "GET",
@@ -815,7 +795,6 @@ class Users : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun deleteSessions(
 		userId: String
 	): Any {
@@ -844,7 +823,6 @@ class Users : Service {
      * @return [Any]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun deleteSession(
 		userId: String,
 		sessionId: String
@@ -875,7 +853,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updateStatus(
 		userId: String,
 		status: Boolean
@@ -887,8 +864,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PATCH",
@@ -910,7 +887,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updateEmailVerification(
 		userId: String,
 		emailVerification: Boolean
@@ -922,8 +898,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PATCH",
@@ -945,7 +921,6 @@ class Users : Service {
      * @return [io.appwrite.models.User]     
      */
     @JvmOverloads
-    @Throws(AppwriteException::class)
     suspend fun updatePhoneVerification(
 		userId: String,
 		phoneVerification: Boolean
@@ -957,8 +932,8 @@ class Users : Service {
         val headers = mutableMapOf(
             "content-type" to "application/json"
         )
-        val converter: (Map<String, Any>) -> io.appwrite.models.User = {
-            io.appwrite.models.User.from(map = it)
+        val converter: (Any) -> io.appwrite.models.User = {
+            io.appwrite.models.User.from(map = it as Map<String, Any>)
         }
         return client.call(
             "PATCH",
