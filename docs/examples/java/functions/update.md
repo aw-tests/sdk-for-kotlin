@@ -12,7 +12,6 @@ Functions functions = new Functions(client);
 functions.update(
     "[FUNCTION_ID]",
     "[NAME]",
-    listOf("any"),
     new CoroutineCallback<>((result, error) -> {
         if (error != null) {
             error.printStackTrace();
