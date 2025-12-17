@@ -2,6 +2,7 @@ package io.appwrite.models
 
 import com.google.gson.annotations.SerializedName
 import io.appwrite.extensions.jsonCast
+import io.appwrite.enums.HealthAntivirusStatus
 
 /**
  * Health Antivirus
@@ -14,15 +15,15 @@ data class HealthAntivirus(
     val version: String,
 
     /**
-     * Antivirus status. Possible values can are: `disabled`, `offline`, `online`
+     * Antivirus status. Possible values are: `disabled`, `offline`, `online`
      */
     @SerializedName("status")
-    val status: String,
+    val status: HealthAntivirusStatus,
 
 ) {
     fun toMap(): Map<String, Any> = mapOf(
         "version" to version as Any,
-        "status" to status as Any,
+        "status" to status.value as Any,
     )
 
     companion object {
@@ -32,7 +33,7 @@ data class HealthAntivirus(
             map: Map<String, Any>,
         ) = HealthAntivirus(
             version = map["version"] as String,
-            status = map["status"] as String,
+            status = HealthAntivirusStatus.values().find { it.value == map["status"] as String }!!,
         )
     }
 }

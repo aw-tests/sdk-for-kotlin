@@ -38,13 +38,19 @@ data class Variable(
     val value: String,
 
     /**
-     * Service to which the variable belongs. Possible values are &quot;project&quot;, &quot;function&quot;
+     * Variable secret flag. Secret variables can only be updated or deleted, but never read.
+     */
+    @SerializedName("secret")
+    val secret: Boolean,
+
+    /**
+     * Service to which the variable belongs. Possible values are "project", "function"
      */
     @SerializedName("resourceType")
     val resourceType: String,
 
     /**
-     * ID of resource to which the variable belongs. If resourceType is &quot;project&quot;, it is empty. If resourceType is &quot;function&quot;, it is ID of the function.
+     * ID of resource to which the variable belongs. If resourceType is "project", it is empty. If resourceType is "function", it is ID of the function.
      */
     @SerializedName("resourceId")
     val resourceId: String,
@@ -56,6 +62,7 @@ data class Variable(
         "\$updatedAt" to updatedAt as Any,
         "key" to key as Any,
         "value" to value as Any,
+        "secret" to secret as Any,
         "resourceType" to resourceType as Any,
         "resourceId" to resourceId as Any,
     )
@@ -71,6 +78,7 @@ data class Variable(
             updatedAt = map["\$updatedAt"] as String,
             key = map["key"] as String,
             value = map["value"] as String,
+            secret = map["secret"] as Boolean,
             resourceType = map["resourceType"] as String,
             resourceId = map["resourceId"] as String,
         )

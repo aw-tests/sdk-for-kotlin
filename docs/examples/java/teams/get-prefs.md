@@ -3,14 +3,14 @@ import io.appwrite.coroutines.CoroutineCallback;
 import io.appwrite.services.Teams;
 
 Client client = new Client()
-    .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-    .setProject("5df5acd0d48c2") // Your project ID
-    .setJWT("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ..."); // Your secret JSON Web Token
+    .setEndpoint("https://<REGION>.cloud.appwrite.io/v1") // Your API Endpoint
+    .setProject("<YOUR_PROJECT_ID>") // Your project ID
+    .setSession(""); // The user session to authenticate with
 
 Teams teams = new Teams(client);
 
 teams.getPrefs(
-    "[TEAM_ID]"
+    "<TEAM_ID>", // teamId
     new CoroutineCallback<>((result, error) -> {
         if (error != null) {
             error.printStackTrace();
@@ -20,3 +20,4 @@ teams.getPrefs(
         System.out.println(result);
     })
 );
+

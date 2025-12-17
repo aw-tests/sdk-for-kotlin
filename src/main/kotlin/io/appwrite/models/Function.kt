@@ -29,7 +29,7 @@ data class Function(
      * Execution permissions.
      */
     @SerializedName("execute")
-    val execute: List<Any>,
+    val execute: List<String>,
 
     /**
      * Function name.
@@ -44,28 +44,58 @@ data class Function(
     val enabled: Boolean,
 
     /**
-     * Is the function deployed with the latest configuration? This is set to false if you&#039;ve changed an environment variables, entrypoint, commands, or other settings that needs redeploy to be applied. When the value is false, redeploy the function to update it with the latest configuration.
+     * Is the function deployed with the latest configuration? This is set to false if you've changed an environment variables, entrypoint, commands, or other settings that needs redeploy to be applied. When the value is false, redeploy the function to update it with the latest configuration.
      */
     @SerializedName("live")
     val live: Boolean,
 
     /**
-     * Whether executions will be logged. When set to false, executions will not be logged, but will reduce resource used by your Appwrite project.
+     * When disabled, executions will exclude logs and errors, and will be slightly faster.
      */
     @SerializedName("logging")
     val logging: Boolean,
 
     /**
-     * Function execution runtime.
+     * Function execution and build runtime.
      */
     @SerializedName("runtime")
     val runtime: String,
 
     /**
-     * Function&#039;s active deployment ID.
+     * Function's active deployment ID.
      */
-    @SerializedName("deployment")
-    val deployment: String,
+    @SerializedName("deploymentId")
+    val deploymentId: String,
+
+    /**
+     * Active deployment creation date in ISO 8601 format.
+     */
+    @SerializedName("deploymentCreatedAt")
+    val deploymentCreatedAt: String,
+
+    /**
+     * Function's latest deployment ID.
+     */
+    @SerializedName("latestDeploymentId")
+    val latestDeploymentId: String,
+
+    /**
+     * Latest deployment creation date in ISO 8601 format.
+     */
+    @SerializedName("latestDeploymentCreatedAt")
+    val latestDeploymentCreatedAt: String,
+
+    /**
+     * Status of latest deployment. Possible values are "waiting", "processing", "building", "ready", and "failed".
+     */
+    @SerializedName("latestDeploymentStatus")
+    val latestDeploymentStatus: String,
+
+    /**
+     * Allowed permission scopes.
+     */
+    @SerializedName("scopes")
+    val scopes: List<String>,
 
     /**
      * Function variables.
@@ -77,10 +107,10 @@ data class Function(
      * Function trigger events.
      */
     @SerializedName("events")
-    val events: List<Any>,
+    val events: List<String>,
 
     /**
-     * Function execution schedult in CRON format.
+     * Function execution schedule in CRON format.
      */
     @SerializedName("schedule")
     val schedule: String,
@@ -139,6 +169,12 @@ data class Function(
     @SerializedName("providerSilentMode")
     val providerSilentMode: Boolean,
 
+    /**
+     * Machine specification for builds and executions.
+     */
+    @SerializedName("specification")
+    val specification: String,
+
 ) {
     fun toMap(): Map<String, Any> = mapOf(
         "\$id" to id as Any,
@@ -150,7 +186,12 @@ data class Function(
         "live" to live as Any,
         "logging" to logging as Any,
         "runtime" to runtime as Any,
-        "deployment" to deployment as Any,
+        "deploymentId" to deploymentId as Any,
+        "deploymentCreatedAt" to deploymentCreatedAt as Any,
+        "latestDeploymentId" to latestDeploymentId as Any,
+        "latestDeploymentCreatedAt" to latestDeploymentCreatedAt as Any,
+        "latestDeploymentStatus" to latestDeploymentStatus as Any,
+        "scopes" to scopes as Any,
         "vars" to vars.map { it.toMap() } as Any,
         "events" to events as Any,
         "schedule" to schedule as Any,
@@ -163,6 +204,7 @@ data class Function(
         "providerBranch" to providerBranch as Any,
         "providerRootDirectory" to providerRootDirectory as Any,
         "providerSilentMode" to providerSilentMode as Any,
+        "specification" to specification as Any,
     )
 
     companion object {
@@ -174,15 +216,20 @@ data class Function(
             id = map["\$id"] as String,
             createdAt = map["\$createdAt"] as String,
             updatedAt = map["\$updatedAt"] as String,
-            execute = map["execute"] as List<Any>,
+            execute = map["execute"] as List<String>,
             name = map["name"] as String,
             enabled = map["enabled"] as Boolean,
             live = map["live"] as Boolean,
             logging = map["logging"] as Boolean,
             runtime = map["runtime"] as String,
-            deployment = map["deployment"] as String,
+            deploymentId = map["deploymentId"] as String,
+            deploymentCreatedAt = map["deploymentCreatedAt"] as String,
+            latestDeploymentId = map["latestDeploymentId"] as String,
+            latestDeploymentCreatedAt = map["latestDeploymentCreatedAt"] as String,
+            latestDeploymentStatus = map["latestDeploymentStatus"] as String,
+            scopes = map["scopes"] as List<String>,
             vars = (map["vars"] as List<Map<String, Any>>).map { Variable.from(map = it) },
-            events = map["events"] as List<Any>,
+            events = map["events"] as List<String>,
             schedule = map["schedule"] as String,
             timeout = (map["timeout"] as Number).toLong(),
             entrypoint = map["entrypoint"] as String,
@@ -193,6 +240,7 @@ data class Function(
             providerBranch = map["providerBranch"] as String,
             providerRootDirectory = map["providerRootDirectory"] as String,
             providerSilentMode = map["providerSilentMode"] as Boolean,
+            specification = map["specification"] as String,
         )
     }
 }

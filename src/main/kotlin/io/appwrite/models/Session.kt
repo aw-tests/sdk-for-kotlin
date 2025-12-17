@@ -20,6 +20,12 @@ data class Session(
     val createdAt: String,
 
     /**
+     * Session update date in ISO 8601 format.
+     */
+    @SerializedName("\$updatedAt")
+    val updatedAt: String,
+
+    /**
      * User ID.
      */
     @SerializedName("userId")
@@ -157,10 +163,29 @@ data class Session(
     @SerializedName("current")
     val current: Boolean,
 
+    /**
+     * Returns a list of active session factors.
+     */
+    @SerializedName("factors")
+    val factors: List<String>,
+
+    /**
+     * Secret used to authenticate the user. Only included if the request was made with an API key
+     */
+    @SerializedName("secret")
+    val secret: String,
+
+    /**
+     * Most recent date in ISO 8601 format when the session successfully passed MFA challenge.
+     */
+    @SerializedName("mfaUpdatedAt")
+    val mfaUpdatedAt: String,
+
 ) {
     fun toMap(): Map<String, Any> = mapOf(
         "\$id" to id as Any,
         "\$createdAt" to createdAt as Any,
+        "\$updatedAt" to updatedAt as Any,
         "userId" to userId as Any,
         "expire" to expire as Any,
         "provider" to provider as Any,
@@ -184,6 +209,9 @@ data class Session(
         "countryCode" to countryCode as Any,
         "countryName" to countryName as Any,
         "current" to current as Any,
+        "factors" to factors as Any,
+        "secret" to secret as Any,
+        "mfaUpdatedAt" to mfaUpdatedAt as Any,
     )
 
     companion object {
@@ -194,6 +222,7 @@ data class Session(
         ) = Session(
             id = map["\$id"] as String,
             createdAt = map["\$createdAt"] as String,
+            updatedAt = map["\$updatedAt"] as String,
             userId = map["userId"] as String,
             expire = map["expire"] as String,
             provider = map["provider"] as String,
@@ -217,6 +246,9 @@ data class Session(
             countryCode = map["countryCode"] as String,
             countryName = map["countryName"] as String,
             current = map["current"] as Boolean,
+            factors = map["factors"] as List<String>,
+            secret = map["secret"] as String,
+            mfaUpdatedAt = map["mfaUpdatedAt"] as String,
         )
     }
 }

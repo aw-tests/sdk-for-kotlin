@@ -3,16 +3,18 @@ import io.appwrite.coroutines.CoroutineCallback;
 import io.appwrite.services.Functions;
 
 Client client = new Client()
-    .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-    .setProject("5df5acd0d48c2") // Your project ID
-    .setKey("919c2d18fb5d4...a2ae413da83346ad2"); // Your secret API key
+    .setEndpoint("https://<REGION>.cloud.appwrite.io/v1") // Your API Endpoint
+    .setProject("<YOUR_PROJECT_ID>") // Your project ID
+    .setKey("<YOUR_API_KEY>"); // Your secret API key
 
 Functions functions = new Functions(client);
 
 functions.updateVariable(
-    "[FUNCTION_ID]",
-    "[VARIABLE_ID]",
-    "[KEY]",
+    "<FUNCTION_ID>", // functionId
+    "<VARIABLE_ID>", // variableId
+    "<KEY>", // key
+    "<VALUE>", // value (optional)
+    false, // secret (optional)
     new CoroutineCallback<>((result, error) -> {
         if (error != null) {
             error.printStackTrace();
@@ -22,3 +24,4 @@ functions.updateVariable(
         System.out.println(result);
     })
 );
+

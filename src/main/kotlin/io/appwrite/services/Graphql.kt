@@ -11,13 +11,9 @@ import java.io.File
 /**
  * The GraphQL API allows you to query and mutate your Appwrite server using GraphQL.
 **/
-class Graphql : Service {
-
-    public constructor (client: Client) : super(client) { }
+class Graphql(client: Client) : Service(client) {
 
     /**
-     * GraphQL endpoint
-     *
      * Execute a GraphQL mutation.
      *
      * @param query The query or queries to execute.
@@ -32,7 +28,7 @@ class Graphql : Service {
         val apiParams = mutableMapOf<String, Any?>(
             "query" to query,
         )
-        val apiHeaders = mutableMapOf(
+        val apiHeaders = mutableMapOf<String, String>(
             "x-sdk-graphql" to "true",
             "content-type" to "application/json",
         )
@@ -50,8 +46,6 @@ class Graphql : Service {
     }
 
     /**
-     * GraphQL endpoint
-     *
      * Execute a GraphQL mutation.
      *
      * @param query The query or queries to execute.
@@ -66,7 +60,7 @@ class Graphql : Service {
         val apiParams = mutableMapOf<String, Any?>(
             "query" to query,
         )
-        val apiHeaders = mutableMapOf(
+        val apiHeaders = mutableMapOf<String, String>(
             "x-sdk-graphql" to "true",
             "content-type" to "application/json",
         )

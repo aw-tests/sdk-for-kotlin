@@ -2,6 +2,8 @@ package io.appwrite.models
 
 import com.google.gson.annotations.SerializedName
 import io.appwrite.extensions.jsonCast
+import io.appwrite.enums.ExecutionTrigger
+import io.appwrite.enums.ExecutionStatus
 
 /**
  * Execution
@@ -20,7 +22,7 @@ data class Execution(
     val createdAt: String,
 
     /**
-     * Execution upate date in ISO 8601 format.
+     * Execution update date in ISO 8601 format.
      */
     @SerializedName("\$updatedAt")
     val updatedAt: String,
@@ -29,7 +31,7 @@ data class Execution(
      * Execution roles.
      */
     @SerializedName("\$permissions")
-    val permissions: List<Any>,
+    val permissions: List<String>,
 
     /**
      * Function ID.
@@ -38,16 +40,22 @@ data class Execution(
     val functionId: String,
 
     /**
+     * Function's deployment ID used to create the execution.
+     */
+    @SerializedName("deploymentId")
+    val deploymentId: String,
+
+    /**
      * The trigger that caused the function to execute. Possible values can be: `http`, `schedule`, or `event`.
      */
     @SerializedName("trigger")
-    val trigger: String,
+    val trigger: ExecutionTrigger,
 
     /**
-     * The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, or `failed`.
+     * The status of the function execution. Possible values can be: `waiting`, `processing`, `completed`, `failed`, or `scheduled`.
      */
     @SerializedName("status")
-    val status: String,
+    val status: ExecutionStatus,
 
     /**
      * HTTP request method type.
@@ -62,7 +70,7 @@ data class Execution(
     val requestPath: String,
 
     /**
-     * HTTP response headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
+     * HTTP request headers as a key-value object. This will return only whitelisted headers. All headers are returned if execution is created as synchronous.
      */
     @SerializedName("requestHeaders")
     val requestHeaders: List<Headers>,
@@ -98,10 +106,16 @@ data class Execution(
     val errors: String,
 
     /**
-     * Function execution duration in seconds.
+     * Resource(function/site) execution duration in seconds.
      */
     @SerializedName("duration")
     val duration: Double,
+
+    /**
+     * The scheduled time for execution. If left empty, execution will be queued immediately.
+     */
+    @SerializedName("scheduledAt")
+    var scheduledAt: String?,
 
 ) {
     fun toMap(): Map<String, Any> = mapOf(
@@ -110,8 +124,9 @@ data class Execution(
         "\$updatedAt" to updatedAt as Any,
         "\$permissions" to permissions as Any,
         "functionId" to functionId as Any,
-        "trigger" to trigger as Any,
-        "status" to status as Any,
+        "deploymentId" to deploymentId as Any,
+        "trigger" to trigger.value as Any,
+        "status" to status.value as Any,
         "requestMethod" to requestMethod as Any,
         "requestPath" to requestPath as Any,
         "requestHeaders" to requestHeaders.map { it.toMap() } as Any,
@@ -121,6 +136,7 @@ data class Execution(
         "logs" to logs as Any,
         "errors" to errors as Any,
         "duration" to duration as Any,
+        "scheduledAt" to scheduledAt as Any,
     )
 
     companion object {
@@ -132,10 +148,11 @@ data class Execution(
             id = map["\$id"] as String,
             createdAt = map["\$createdAt"] as String,
             updatedAt = map["\$updatedAt"] as String,
-            permissions = map["\$permissions"] as List<Any>,
+            permissions = map["\$permissions"] as List<String>,
             functionId = map["functionId"] as String,
-            trigger = map["trigger"] as String,
-            status = map["status"] as String,
+            deploymentId = map["deploymentId"] as String,
+            trigger = ExecutionTrigger.values().find { it.value == map["trigger"] as String }!!,
+            status = ExecutionStatus.values().find { it.value == map["status"] as String }!!,
             requestMethod = map["requestMethod"] as String,
             requestPath = map["requestPath"] as String,
             requestHeaders = (map["requestHeaders"] as List<Map<String, Any>>).map { Headers.from(map = it) },
@@ -145,6 +162,7 @@ data class Execution(
             logs = map["logs"] as String,
             errors = map["errors"] as String,
             duration = (map["duration"] as Number).toDouble(),
+            scheduledAt = map["scheduledAt"] as? String,
         )
     }
 }

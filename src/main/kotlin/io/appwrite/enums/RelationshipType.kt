@@ -1,10 +1,16 @@
 package io.appwrite.enums
 
+import com.google.gson.annotations.SerializedName
+
 enum class RelationshipType(val value: String) {
-    ONE_TO_ONE("oneToOne"),
-    MANY_TO_ONE("manyToOne"),
-    MANY_TO_MANY("manyToMany"),
-    ONE_TO_MANY("oneToMany");
+    @SerializedName("oneToOne")
+    ONETOONE("oneToOne"),
+    @SerializedName("manyToOne")
+    MANYTOONE("manyToOne"),
+    @SerializedName("manyToMany")
+    MANYTOMANY("manyToMany"),
+    @SerializedName("oneToMany")
+    ONETOMANY("oneToMany");
 
     override fun toString() = value
 }

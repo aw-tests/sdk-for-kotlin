@@ -32,13 +32,13 @@ data class Membership(
     val userId: String,
 
     /**
-     * User name.
+     * User name. Hide this attribute by toggling membership privacy in the Console.
      */
     @SerializedName("userName")
     val userName: String,
 
     /**
-     * User email address.
+     * User email address. Hide this attribute by toggling membership privacy in the Console.
      */
     @SerializedName("userEmail")
     val userEmail: String,
@@ -74,10 +74,16 @@ data class Membership(
     val confirm: Boolean,
 
     /**
+     * Multi factor authentication status, true if the user has MFA enabled or false otherwise. Hide this attribute by toggling membership privacy in the Console.
+     */
+    @SerializedName("mfa")
+    val mfa: Boolean,
+
+    /**
      * User list of roles
      */
     @SerializedName("roles")
-    val roles: List<Any>,
+    val roles: List<String>,
 
 ) {
     fun toMap(): Map<String, Any> = mapOf(
@@ -92,6 +98,7 @@ data class Membership(
         "invited" to invited as Any,
         "joined" to joined as Any,
         "confirm" to confirm as Any,
+        "mfa" to mfa as Any,
         "roles" to roles as Any,
     )
 
@@ -112,7 +119,8 @@ data class Membership(
             invited = map["invited"] as String,
             joined = map["joined"] as String,
             confirm = map["confirm"] as Boolean,
-            roles = map["roles"] as List<Any>,
+            mfa = map["mfa"] as Boolean,
+            roles = map["roles"] as List<String>,
         )
     }
 }

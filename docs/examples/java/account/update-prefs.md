@@ -3,14 +3,18 @@ import io.appwrite.coroutines.CoroutineCallback;
 import io.appwrite.services.Account;
 
 Client client = new Client()
-    .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-    .setProject("5df5acd0d48c2") // Your project ID
-    .setJWT("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ..."); // Your secret JSON Web Token
+    .setEndpoint("https://<REGION>.cloud.appwrite.io/v1") // Your API Endpoint
+    .setProject("<YOUR_PROJECT_ID>") // Your project ID
+    .setSession(""); // The user session to authenticate with
 
 Account account = new Account(client);
 
 account.updatePrefs(
-    mapOf( "a" to "b" )
+    Map.of(
+        "language", "en",
+        "timezone", "UTC",
+        "darkTheme", true
+    ), // prefs
     new CoroutineCallback<>((result, error) -> {
         if (error != null) {
             error.printStackTrace();
@@ -20,3 +24,4 @@ account.updatePrefs(
         System.out.println(result);
     })
 );
+

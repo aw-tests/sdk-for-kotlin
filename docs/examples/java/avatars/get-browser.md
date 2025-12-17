@@ -4,14 +4,17 @@ import io.appwrite.services.Avatars;
 import io.appwrite.enums.Browser;
 
 Client client = new Client()
-    .setEndpoint("https://cloud.appwrite.io/v1") // Your API Endpoint
-    .setProject("5df5acd0d48c2") // Your project ID
-    .setKey("919c2d18fb5d4...a2ae413da83346ad2"); // Your secret API key
+    .setEndpoint("https://<REGION>.cloud.appwrite.io/v1") // Your API Endpoint
+    .setProject("<YOUR_PROJECT_ID>") // Your project ID
+    .setSession(""); // The user session to authenticate with
 
 Avatars avatars = new Avatars(client);
 
 avatars.getBrowser(
-    Browser.AVANT_BROWSER,
+    Browser.AVANT_BROWSER, // code
+    0, // width (optional)
+    0, // height (optional)
+    -1, // quality (optional)
     new CoroutineCallback<>((result, error) -> {
         if (error != null) {
             error.printStackTrace();
@@ -21,3 +24,4 @@ avatars.getBrowser(
         System.out.println(result);
     })
 );
+

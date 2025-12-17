@@ -1,11 +1,22 @@
 package io.appwrite.enums
 
+import com.google.gson.annotations.SerializedName
+
 enum class ImageFormat(val value: String) {
+    @SerializedName("jpg")
     JPG("jpg"),
+    @SerializedName("jpeg")
     JPEG("jpeg"),
-    GIF("gif"),
+    @SerializedName("png")
     PNG("png"),
-    WEBP("webp");
+    @SerializedName("webp")
+    WEBP("webp"),
+    @SerializedName("heic")
+    HEIC("heic"),
+    @SerializedName("avif")
+    AVIF("avif"),
+    @SerializedName("gif")
+    GIF("gif");
 
     override fun toString() = value
 }
